@@ -64,8 +64,8 @@ body {
 @media (hover: hover) and (pointer: fine) {
   .lift-hover:hover {
     transform: translateY(-3px);
-    border-color: rgba(6, 131, 249, 0.45);
-    box-shadow: 0 12px 28px -14px rgba(6, 131, 249, 0.35);
+    border-color: rgba(100, 116, 139, 0.45);
+    box-shadow: 0 12px 28px -14px rgba(100, 116, 139, 0.4);
   }
 }
 

@@ -30,7 +30,6 @@ export function AssessmentForm({
   const pinnedCountRef = useRef(0);
   const allowLeaveRef = useRef(false);
   const canGoBackRef = useRef(false);
-  const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   /**
    * Browser-navigation guard: once the assessment is entered, browser
@@ -62,18 +61,7 @@ export function AssessmentForm({
   const chosen = answers[question.id];
   const hasAnswered = chosen != null;
 
-  // Clears any pending auto-advance so back/cancel/unmount can't fire a stale
-  // navigation after the user has already moved on.
-  function clearPendingAdvance() {
-    if (advanceTimeoutRef.current != null) {
-      clearTimeout(advanceTimeoutRef.current);
-      advanceTimeoutRef.current = null;
-    }
-  }
-  useEffect(() => clearPendingAdvance, []);
-
   function advance(currentAnswers: AssessmentAnswers) {
-    clearPendingAdvance();
     if (!isLast) {
       setIndex((i) => i + 1);
       return;
@@ -95,9 +83,6 @@ export function AssessmentForm({
   function choose(optionId: string) {
     const nextAnswers = { ...answers, [question.id]: optionId };
     setAnswers(nextAnswers);
-    clearPendingAdvance();
-    // Brief delay so the selection's highlight is visible before advancing.
-    advanceTimeoutRef.current = setTimeout(() => advance(nextAnswers), 350);
   }
 
   /**
@@ -106,7 +91,6 @@ export function AssessmentForm({
    * back to the career-select screen.
    */
   function cancel() {
-    clearPendingAdvance();
     allowLeaveRef.current = true;
     if (canGoBackRef.current) {
       history.go(-pinnedCountRef.current);
@@ -116,7 +100,6 @@ export function AssessmentForm({
   }
 
   function goBack() {
-    clearPendingAdvance();
     setIndex((i) => i - 1);
   }
 
