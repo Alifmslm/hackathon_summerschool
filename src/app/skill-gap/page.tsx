@@ -77,7 +77,7 @@ export default function SkillGapPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
-      <header className="mb-8">
+      <header className="animate-rise mb-8">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
           Skill gap
         </p>
@@ -145,7 +145,10 @@ function GapDashboard({ result }: { result: StashedResult }) {
       <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
         {/* Left panel */}
         <div className="space-y-6">
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section
+            className="animate-rise lift-hover rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+            style={{ animationDelay: "60ms" }}
+          >
             <div className="flex items-center gap-5">
               <ScoreRing value={overall} size={96} color={LEVELS[scoreLevel(overall)].color} />
               <div>
@@ -166,18 +169,22 @@ function GapDashboard({ result }: { result: StashedResult }) {
             </p>
           </section>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section
+            className="animate-rise lift-hover rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+            style={{ animationDelay: "120ms" }}
+          >
             <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
               Your Biggest Skill Gaps
             </p>
             {biggest.length > 0 ? (
               <ul className="mt-4 space-y-3">
-                {biggest.map((g) => {
+                {biggest.map((g, i) => {
                   const badge = BADGE[g.severity];
                   return (
                     <li
                       key={g.skillId}
-                      className="rounded-xl border border-red-200 bg-red-50/60 p-4"
+                      className="animate-rise lift-only rounded-xl border border-red-200 bg-red-50/60 p-4"
+                      style={{ animationDelay: `${200 + i * 70}ms` }}
                     >
                       <div className="flex items-center justify-between gap-2">
                         <p className="text-sm font-semibold text-slate-800">{g.name}</p>
@@ -203,16 +210,23 @@ function GapDashboard({ result }: { result: StashedResult }) {
         </div>
 
         {/* Right panel */}
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section
+          className="animate-rise lift-hover rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+          style={{ animationDelay: "180ms" }}
+        >
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
             Core Competency Gap Analysis
           </p>
           <div className="mt-5 space-y-6">
-            {sorted.map((r) => {
+            {sorted.map((r, i) => {
               const gap = r.target - r.current;
               const noGap = gap <= 0;
               return (
-                <div key={r.skillId}>
+                <div
+                  key={r.skillId}
+                  className="animate-rise"
+                  style={{ animationDelay: `${260 + i * 45}ms` }}
+                >
                   <div className="flex items-baseline justify-between gap-2">
                     <p className="text-sm font-medium text-slate-800">{r.name}</p>
                     <span
@@ -265,13 +279,13 @@ function GapDashboard({ result }: { result: StashedResult }) {
       <div className="mt-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <Link
           href={ROUTES.assessment(careerId)}
-          className="rounded-lg border border-secondary bg-white px-5 py-3 text-center text-sm font-bold uppercase tracking-wide text-secondary transition duration-150 ease-out hover:bg-secondary/10 active:scale-[0.98]"
+          className="lift-only rounded-lg border border-secondary bg-white px-5 py-3 text-center text-sm font-bold uppercase tracking-wide text-secondary hover:bg-secondary/10 active:scale-[0.98]"
         >
           Retake assessment
         </Link>
         <Link
           href={ROUTES.project}
-          className="rounded-lg bg-brand px-5 py-3 text-center text-sm font-bold uppercase tracking-wide text-white transition duration-150 ease-out hover:bg-brand-dark active:scale-[0.98]"
+          className="lift-only rounded-lg bg-brand px-5 py-3 text-center text-sm font-bold uppercase tracking-wide text-white hover:bg-brand-dark active:scale-[0.98]"
         >
           Get a project that closes these gaps
         </Link>
