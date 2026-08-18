@@ -167,6 +167,7 @@ export interface Project {
   difficulty?: ProjectDifficulty;
   referenceLinks?: ProjectReference[]; // inspiration links (informational)
   suggestedTools?: string[]; // suggested tools (informational)
+  colabUrl?: string; // Google Colab notebook, rendered as a distinct CTA
 }
 
 /**
