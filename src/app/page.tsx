@@ -37,11 +37,6 @@ export default function HomePage() {
           I already know my path
         </Link>
       </div>
-
-      <p className="mt-12 text-xs text-slate-400">
-        Flow: /career/questionnaire · /career/select · /career/result ·
-        /assessment/[career] · /skill-gap · /project
-      </p>
     </main>
   );
 }

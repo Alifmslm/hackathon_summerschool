@@ -1,16 +1,15 @@
-import { ScreenPlaceholder } from "@/components/ui/ScreenPlaceholder";
-import { ROUTES } from "@/constants";
+import { notFound } from "next/navigation";
+import { AssessmentForm } from "@/components/assessment/AssessmentForm";
+import { getAssessment } from "@/lib/data/assessment-questions";
 import { getCareer } from "@/lib/data/careers";
 
-/** Skill assessment for a career → GET /api/assessment/[career], POST /submit. */
+/**
+ * Skill assessment for a career (Step 2).
+ * FE mockup: renders from the dummy per-career assessment data. Swap for GET
+ * /api/assessment/[career] + POST /api/assessment/submit when integrating.
+ */
 export default function AssessmentPage({ params }: { params: { career: string } }) {
   const career = getCareer(params.career);
-  return (
-    <ScreenPlaceholder
-      step="Step 2 · Assess"
-      title={`Skill Assessment${career ? ` — ${career.name}` : ""}`}
-      description="One question per skill, scored by /api/assessment/submit into a SkillProfile. Different question set per career."
-      next={{ href: ROUTES.skillGap, label: "See my skill gaps" }}
-    />
-  );
+  if (!career) notFound();
+  return <AssessmentForm career={career} questions={getAssessment(career.id)} />;
 }

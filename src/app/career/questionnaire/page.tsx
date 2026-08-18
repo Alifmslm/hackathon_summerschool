@@ -1,14 +1,13 @@
-import { ScreenPlaceholder } from "@/components/ui/ScreenPlaceholder";
-import { ROUTES } from "@/constants";
+import { QuestionnaireForm } from "@/components/career/QuestionnaireForm";
+import { CAREERS } from "@/lib/data/careers";
+import { QUESTIONNAIRE } from "@/lib/data/questionnaire";
 
-/** Career discovery quiz → POST /api/career/recommend. */
+/**
+ * Career discovery quiz (Step 1).
+ * FE mockup: renders from the dummy questionnaire data. Swap `QUESTIONNAIRE` for
+ * a GET /api/career/list + the form's client-side scoring for POST
+ * /api/career/recommend when integrating with the backend.
+ */
 export default function QuestionnairePage() {
-  return (
-    <ScreenPlaceholder
-      step="Step 1 · Discover"
-      title="Career Discovery Questionnaire"
-      description="Answer a few questions about your interests and working style. Answers are scored by /api/career/recommend to suggest a matching career."
-      next={{ href: ROUTES.careerResult, label: "See result" }}
-    />
-  );
+  return <QuestionnaireForm questions={QUESTIONNAIRE} careers={CAREERS} />;
 }
