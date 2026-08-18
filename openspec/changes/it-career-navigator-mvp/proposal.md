@@ -8,7 +8,7 @@ IT Career Navigator needs a working end-to-end MVP by the end of the hackathon: 
 - Build the shared backend engine, owned by the backend/questionnaire owner:
   - Career-matching: a fixed (non-AI), deterministic rule-based scoring function over questionnaire answers, producing a recommended career + match % + alternatives.
   - Skill-gap detection: a fixed, deterministic current-vs-target skill comparison per career path.
-  - Project recommendation: **AI-assisted** generation (not fixed/templated) — given a user's skill gaps, call an LLM to generate a project description, skills-to-practice, and core/technical requirements. The call must be provider-agnostic (swap API key/provider via config), targeting Gemini 3.1 Flash as the initial provider.
+  - Project recommendation, in two versions behind the same function signature. Version 1 scores a fixed set of project templates against the user's skill gaps by gap overlap and returns the best match (title, description, skills-to-practice, core and technical requirements). Version 2, the next task, replaces the template scoring with a call to an LLM, so the project is generated instead of matched from a fixed list. The LLM call must be provider-agnostic (swap API key/provider through configuration), targeting Gemini 3.1 Flash as the initial provider.
   - PDF export of the generated project guide.
 - Build career-path domain data as two independent file sets so the two path owners never edit the same file:
   - `lib/data/assessment-questions/ai-engineer.ts`, and AI Engineer entries in `careers.ts` — owned by the backend/AI-engineer-path owner.
@@ -23,7 +23,7 @@ IT Career Navigator needs a working end-to-end MVP by the end of the hackathon: 
 - `career-questionnaire`: career discovery quiz and manual career selection; deterministic scoring that maps quiz answers to a recommended career, match %, explanation, and alternatives.
 - `skill-assessment`: per-career-path skill assessment questions and submission, producing a skill profile.
 - `skill-gap-detection`: deterministic comparison of current vs. target skill levels for a selected career, ranked by gap size.
-- `project-recommendation`: AI-assisted generation of a practice project (description, skills practiced, core requirements, technical requirements) from a user's skill gaps, via a provider-agnostic LLM call.
+- `project-recommendation`: generation of a practice project (description, skills practiced, core requirements, technical requirements) from a user's skill gaps. Version 1 selects from fixed templates by gap overlap. Version 2, planned next, generates the project by calling an LLM through a provider-agnostic interface.
 - `project-pdf-export`: exporting the generated project guide as a downloadable PDF.
 
 ### Modified Capabilities
@@ -31,7 +31,7 @@ IT Career Navigator needs a working end-to-end MVP by the end of the hackathon: 
 
 ## Impact
 
-- Affected code: entire `src/` tree (does not yet exist) — `app/`, `app/api/*`, `lib/rules/*`, `lib/data/*`, `lib/pdf/*`, `lib/validators/*`, `types/index.ts`, `components/*`, `hooks/*`, `store/*`.
-- New dependency: an LLM provider SDK/HTTP client for project generation (Gemini 3.1 Flash initially, via an env-configured API key), kept behind a provider-agnostic interface so the key/provider can be swapped without touching call sites.
-- New dependency: a PDF generation library for `lib/pdf/generate-project-guide.ts`.
-- No existing users or data — no migration or breaking-change concerns.
+- Affected code: entire `src/` tree, including `app/`, `app/api/*`, `lib/rules/*`, `lib/data/*`, `lib/pdf/*`, `lib/validators/*`, `types/index.ts`, `components/*`, `hooks/*`, and `store/*`.
+- New dependency, planned next: an LLM provider SDK or HTTP client for project generation v2 (Gemini 3.1 Flash initially, through an env-configured API key), kept behind a provider-agnostic interface so the key or provider can be swapped without touching call sites.
+- New dependency: a PDF generation library for `lib/pdf/generate-project-guide.ts`. Not yet chosen. The route currently returns print-ready HTML as a placeholder.
+- No existing users or data, so there are no migration or breaking-change concerns.
