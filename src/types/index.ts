@@ -146,6 +146,15 @@ export interface ProjectRequirement {
   label: string;
 }
 
+/** Skill level a project is suited to (informational — does not affect matching). */
+export type ProjectDifficulty = "beginner" | "intermediate" | "advanced";
+
+/** Curated inspiration link shown in the UI / PDF guide. */
+export interface ProjectReference {
+  title: string;
+  url: string;
+}
+
 /** A recommended, buildable project targeting the user's gaps. */
 export interface Project {
   id: string;
@@ -155,16 +164,22 @@ export interface Project {
   coreRequirements: ProjectRequirement[]; // product/user perspective
   technicalRequirements: ProjectRequirement[]; // implementation constraints
   matchedGaps: string[]; // skillIds this project addresses
+  difficulty?: ProjectDifficulty;
+  referenceLinks?: ProjectReference[]; // inspiration links (informational)
+  suggestedTools?: string[]; // suggested tools (informational)
 }
 
 /**
  * The static template stored in `lib/data/projects.ts`. The recommendation
  * engine selects a template by overlap with the user's top gaps and returns a
- * `Project`.
+ * `Project`. `difficulty` is informational and does not affect matching.
  */
 export interface ProjectTemplate extends Project {
   careerId: CareerId;
   primarySkillIds: string[]; // gaps this template is designed to close
+  difficulty: ProjectDifficulty;
+  referenceLinks: ProjectReference[];
+  suggestedTools: string[];
 }
 
 /* ═══════════════════════ Step 5 — PDF Project Guide ═══════════════════════ */
