@@ -43,6 +43,7 @@ export const skillGapSchema = z.object({
 
 export const recommendProjectSchema = z.object({
   careerId: careerIdSchema,
+  overall: z.number().min(0).max(100),
   gaps: z.array(skillGapSchema),
 });
 
