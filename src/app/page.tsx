@@ -8,18 +8,30 @@ import { ROUTES } from "@/constants";
 export default function HomePage() {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col items-center justify-center px-6 py-20 text-center">
-      <span className="mb-4 rounded-full bg-brand/10 px-3 py-1 text-sm font-medium text-brand-dark">
+      <span
+        className="animate-rise mb-4 rounded-full bg-brand/10 px-3 py-1 text-sm font-medium text-brand-dark"
+        style={{ animationDelay: "0ms" }}
+      >
         IT Career Navigator
       </span>
-      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+      <h1
+        className="animate-rise text-4xl font-bold tracking-tight sm:text-5xl"
+        style={{ animationDelay: "60ms" }}
+      >
         Discover the IT career that fits you.
       </h1>
-      <p className="mt-5 max-w-xl text-lg text-slate-600">
+      <p
+        className="animate-rise mt-5 max-w-xl text-lg text-slate-600"
+        style={{ animationDelay: "120ms" }}
+      >
         Understand your current skill level, find your biggest skill gaps, and get
         practical projects to help you grow toward the career you want.
       </p>
 
-      <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+      <div
+        className="animate-rise mt-10 flex flex-col gap-3 sm:flex-row"
+        style={{ animationDelay: "180ms" }}
+      >
         <Link
           href={ROUTES.questionnaire}
           className="rounded-lg bg-brand px-6 py-3 font-medium text-white shadow-sm transition"

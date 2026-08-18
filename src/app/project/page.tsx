@@ -91,7 +91,9 @@ function ProjectPrompt() {
 function ProjectBrief({ result }: { result: StashedResult }) {
   const { careerId, careerName, overall, gaps } = result;
   const career = CAREERS.find((c) => c.id === careerId);
-  const project = isCareerId(careerId) ? recommendProject(careerId, gaps) : null;
+  const project = isCareerId(careerId)
+    ? recommendProject(careerId, gaps, overallToDifficulty(overall))
+    : null;
   const [exporting, setExporting] = useState(false);
 
   async function exportPdf() {
