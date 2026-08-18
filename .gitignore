@@ -26,3 +26,4 @@ next-env.d.ts
 
 # NOTE: .env.local is normally ignored; kept tracked here (no secrets) so both
 # contributors can see the template. Add real secrets to a separate untracked file.
+.env
