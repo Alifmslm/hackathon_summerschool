@@ -30,6 +30,7 @@ export function AssessmentForm({
   const pinnedCountRef = useRef(0);
   const allowLeaveRef = useRef(false);
   const canGoBackRef = useRef(false);
+  const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   /**
    * Browser-navigation guard: once the assessment is entered, browser
@@ -61,31 +62,23 @@ export function AssessmentForm({
   const chosen = answers[question.id];
   const hasAnswered = chosen != null;
 
-  function choose(optionId: string) {
-    setAnswers((prev) => ({ ...prev, [question.id]: optionId }));
-  }
-
-  /**
-   * Leave the assessment. If the user came from inside the app, return to the
-   * page they came from; otherwise (direct visit / bookmark / refresh) fall
-   * back to the career-select screen.
-   */
-  function cancel() {
-    allowLeaveRef.current = true;
-    if (canGoBackRef.current) {
-      history.go(-pinnedCountRef.current);
-    } else {
-      window.location.href = ROUTES.selectCareer;
+  // Clears any pending auto-advance so back/cancel/unmount can't fire a stale
+  // navigation after the user has already moved on.
+  function clearPendingAdvance() {
+    if (advanceTimeoutRef.current != null) {
+      clearTimeout(advanceTimeoutRef.current);
+      advanceTimeoutRef.current = null;
     }
   }
+  useEffect(() => clearPendingAdvance, []);
 
-  function next() {
-    if (!hasAnswered) return;
+  function advance(currentAnswers: AssessmentAnswers) {
+    clearPendingAdvance();
     if (!isLast) {
       setIndex((i) => i + 1);
       return;
     }
-    const profile = scoreAssessment(career.id, answers);
+    const profile = scoreAssessment(career.id, currentAnswers);
     const result = computeSkillGap(career.id, profile.skills);
     sessionStorage.setItem(
       "skillGapResult",
@@ -97,6 +90,39 @@ export function AssessmentForm({
       })
     );
     window.location.href = ROUTES.skillGap;
+  }
+
+  function choose(optionId: string) {
+    const nextAnswers = { ...answers, [question.id]: optionId };
+    setAnswers(nextAnswers);
+    clearPendingAdvance();
+    // Brief delay so the selection's highlight is visible before advancing.
+    advanceTimeoutRef.current = setTimeout(() => advance(nextAnswers), 350);
+  }
+
+  /**
+   * Leave the assessment. If the user came from inside the app, return to the
+   * page they came from; otherwise (direct visit / bookmark / refresh) fall
+   * back to the career-select screen.
+   */
+  function cancel() {
+    clearPendingAdvance();
+    allowLeaveRef.current = true;
+    if (canGoBackRef.current) {
+      history.go(-pinnedCountRef.current);
+    } else {
+      window.location.href = ROUTES.selectCareer;
+    }
+  }
+
+  function goBack() {
+    clearPendingAdvance();
+    setIndex((i) => i - 1);
+  }
+
+  function next() {
+    if (!hasAnswered) return;
+    advance(answers);
   }
 
   return (
@@ -161,7 +187,7 @@ export function AssessmentForm({
             Cancel
           </Button>
         ) : (
-          <Button variant="secondary" onClick={() => setIndex((i) => i - 1)}>
+          <Button variant="secondary" onClick={goBack}>
             Back
           </Button>
         )}
