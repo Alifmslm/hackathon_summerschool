@@ -59,7 +59,7 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
     title: "Build and Serve a Customer Churn Predictor",
     description:
       "Take a raw customer dataset, clean it, train a model to predict churn, and expose it behind an API. Focuses on the full path from messy data to a deployed, callable model.",
-    skillsPracticed: ["Data Processing", "Machine Learning Fundamentals", "Model Development", "APIs"],
+    skillsPracticed: ["APIs & Data Handling", "RAG & Vector Search", "Evaluation & Quality"],
     coreRequirements: [
       { id: "c1", label: "Predict whether a customer will churn from their profile." },
       { id: "c2", label: "Report accuracy and at least one other metric." },
@@ -72,7 +72,7 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
       { id: "t4", label: "Document how to run it end-to-end." },
     ],
     matchedGaps: [],
-    primarySkillIds: ["data-processing", "model-development", "ml-fundamentals", "apis"],
+    primarySkillIds: ["apis", "rag", "ai-evaluation"],
   },
   {
     id: "ai-python-foundations",
@@ -80,7 +80,7 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
     title: "Data Toolkit: Strengthen Python & Fundamentals",
     description:
       "Build a small command-line data toolkit (load, clean, summarise CSVs) to solidify Python and programming fundamentals before moving into modelling.",
-    skillsPracticed: ["Python", "Programming Fundamentals", "Data Processing", "AI / ML Tools"],
+    skillsPracticed: ["Programming Fundamentals", "APIs & Data Handling"],
     coreRequirements: [
       { id: "c1", label: "Load a CSV and print summary statistics." },
       { id: "c2", label: "Clean missing/invalid rows with clear rules." },
@@ -92,6 +92,6 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
       { id: "t3", label: "Add basic unit tests." },
     ],
     matchedGaps: [],
-    primarySkillIds: ["python", "programming-fundamentals", "data-processing"],
+    primarySkillIds: ["programming-fundamentals", "apis"],
   },
 ];

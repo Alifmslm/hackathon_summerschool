@@ -83,6 +83,13 @@ export const SKILLS: Record<string, Skill> = {
     description:
       "The libraries and platforms (numpy, scikit-learn, PyTorch) used to build AI systems.",
   },
+  "programming-fundamentals": { id: "programming-fundamentals", name: "Programming Fundamentals" },
+  "llm-fundamentals": { id: "llm-fundamentals", name: "LLMs & Prompting" },
+  apis: { id: "apis", name: "APIs & Data Handling" },
+  rag: { id: "rag", name: "RAG & Vector Search" },
+  "ai-agents": { id: "ai-agents", name: "AI Agents & Orchestration" },
+  "ai-evaluation": { id: "ai-evaluation", name: "Evaluation & Quality" },
+  deployment: { id: "deployment", name: "Deployment & ML Fundamentals" },
 };
 
 export function skillName(skillId: string): string {
@@ -124,13 +131,13 @@ export const CAREERS: Career[] = [
     description:
       "AI Engineers write solid code, wrangle data, and develop and ship machine-learning models behind real applications.",
     skills: [
-      { skillId: "python", target: 85, weight: 1.3 },
-      { skillId: "programming-fundamentals", target: 80, weight: 1.2 },
-      { skillId: "data-processing", target: 75, weight: 1.1 },
-      { skillId: "ml-fundamentals", target: 80, weight: 1.3 },
-      { skillId: "model-development", target: 75, weight: 1.2 },
-      { skillId: "apis", target: 70, weight: 1.0 },
-      { skillId: "ai-ml-tools", target: 70, weight: 1.0 },
+      { skillId: "programming-fundamentals", target: 85, weight: 1.3 },
+      { skillId: "llm-fundamentals", target: 80, weight: 1.2 },
+      { skillId: "apis", target: 75, weight: 1.1 },
+      { skillId: "rag", target: 80, weight: 1.3 },
+      { skillId: "ai-agents", target: 75, weight: 1.2 },
+      { skillId: "ai-evaluation", target: 70, weight: 1.0 },
+      { skillId: "deployment", target: 70, weight: 1.0 },
     ],
   },
 ];
