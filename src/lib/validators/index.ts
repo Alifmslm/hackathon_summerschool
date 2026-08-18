@@ -58,6 +58,9 @@ export const projectSchema = z.object({
   coreRequirements: z.array(requirementSchema),
   technicalRequirements: z.array(requirementSchema),
   matchedGaps: z.array(z.string()),
+  difficulty: z.enum(["beginner", "intermediate", "advanced"]).optional(),
+  suggestedTools: z.array(z.string()).optional(),
+  referenceLinks: z.array(z.object({ title: z.string(), url: z.string() })).optional(),
 });
 
 export const generatePdfSchema = z.object({ project: projectSchema });
