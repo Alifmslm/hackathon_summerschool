@@ -196,6 +196,22 @@ function ProjectBrief({ result }: { result: StashedResult }) {
           </section>
         )}
 
+        {project.colabUrl && (
+          <section className="mt-8">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
+              Starter notebook
+            </h3>
+            <a
+              href={project.colabUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center justify-center rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-white transition duration-150 ease-out hover:bg-brand-dark active:scale-[0.98]"
+            >
+              Open in Google Colab
+            </a>
+          </section>
+        )}
+
         {project.referenceLinks && project.referenceLinks.length > 0 && (
           <section className="mt-8">
             <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">

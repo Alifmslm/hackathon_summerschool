@@ -918,8 +918,8 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
     referenceLinks: [
       { title: "Gemini API quickstart", url: "https://ai.google.dev/gemini-api/docs/quickstart" },
       { title: "Gemini embeddings guide", url: "https://ai.google.dev/gemini-api/docs/embeddings" },
-      { title: "Google Colab notebook", url: "https://colab.research.google.com/drive/1hXm4qvkH7rO4LSbklnt0THspQjWw3l0t?usp=sharing" },
     ],
+    colabUrl: "https://colab.research.google.com/drive/1hXm4qvkH7rO4LSbklnt0THspQjWw3l0t?usp=sharing",
     suggestedTools: ["Google Colab", "Gemini API", "Python"],
     matchedGaps: [],
     primarySkillIds: ["llm-fundamentals", "apis", "rag", "programming-fundamentals"],
@@ -958,8 +958,8 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
     referenceLinks: [
       { title: "FastAPI getting started", url: "https://fastapi.tiangolo.com/tutorial/" },
       { title: "Chroma vector database docs", url: "https://docs.trychroma.com" },
-      { title: "Google Colab notebook", url: "https://colab.research.google.com/drive/1YHgC_NNuMG4HMgWeObKr29zzrIKHjIsf?usp=sharing"}
     ],
+    colabUrl: "https://colab.research.google.com/drive/1YHgC_NNuMG4HMgWeObKr29zzrIKHjIsf?usp=sharing",
     suggestedTools: ["FastAPI", "Chroma", "Gemini API", "Railway or Render (deployment)"],
     matchedGaps: [],
     primarySkillIds: ["ai-agents", "apis", "deployment", "ai-evaluation"],
@@ -997,8 +997,8 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
     ],
     referenceLinks: [
       { title: "Ragas — eval framework for RAG", url: "https://docs.ragas.io" },
-      { title: "Google Colab Notebook", url: "https://colab.research.google.com/drive/1bly0xF802WDEWf9HQzY2EpeqpddJYnoH?usp=sharing" },
     ],
+    colabUrl: "https://colab.research.google.com/drive/1bly0xF802WDEWf9HQzY2EpeqpddJYnoH?usp=sharing",
     suggestedTools: ["Docker", "GitHub Actions", "Ragas", "Gemini API", "FastAPI"],
     matchedGaps: [],
     primarySkillIds: ["ai-evaluation", "deployment", "rag", "ai-agents"],
