@@ -102,12 +102,35 @@ body {
   animation: float-y 6s ease-in-out 1.5s infinite;
 }
 
+/* Hero artwork name tags — revealed on fine-pointer hover only. */
+.hero-art {
+  pointer-events: auto;
+}
+
+.hero-note {
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-art:hover .hero-note {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-rise,
   .animate-pop,
   .animate-float,
   .animate-float-delayed {
     animation: none;
+  }
+  .hero-note {
+    transition: none;
   }
   .lift-hover,
   .lift-hover:hover,

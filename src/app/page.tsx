@@ -8,25 +8,41 @@ import { ROUTES } from "@/constants";
 export default function HomePage() {
   return (
     <main className="relative mx-auto flex min-h-screen w-full flex-col items-center justify-center px-6 py-20 text-center">
-      <div className="pointer-events-none absolute inset-y-0 left-4 hidden items-center lg:flex xl:left-10">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/hero-1.webp"
-          alt=""
-          aria-hidden
-          className="animate-float w-40 xl:w-52"
-          draggable={false}
-        />
+      <div className="pointer-events-none absolute inset-y-0 left-2 hidden items-center lg:flex xl:left-4">
+        <div
+          className="hero-art animate-rise flex flex-col items-center"
+          style={{ animationDelay: "80ms" }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero-1.webp"
+            alt=""
+            aria-hidden
+            className="animate-float aspect-square w-44 rounded-3xl xl:w-56"
+            draggable={false}
+          />
+          <p className="hero-note mt-2 whitespace-nowrap rounded-full bg-white/85 px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-brand-dark shadow-sm backdrop-blur">
+            Disha
+          </p>
+        </div>
       </div>
-      <div className="pointer-events-none absolute inset-y-0 right-4 hidden items-center lg:flex xl:right-10">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/hero-2.webp"
-          alt=""
-          aria-hidden
-          className="animate-float-delayed w-40 xl:w-52"
-          draggable={false}
-        />
+      <div className="pointer-events-none absolute inset-y-0 right-2 hidden items-center lg:flex xl:right-4">
+        <div
+          className="hero-art animate-rise flex flex-col items-center"
+          style={{ animationDelay: "140ms" }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero-2.webp"
+            alt=""
+            aria-hidden
+            className="animate-float-delayed aspect-square w-44 rounded-3xl xl:w-56"
+            draggable={false}
+          />
+          <p className="hero-note mt-2 whitespace-nowrap rounded-full bg-white/85 px-3 py-1 text-xs font-bold uppercase tracking-[0.15em] text-brand-dark shadow-sm backdrop-blur">
+            Odys
+          </p>
+        </div>
       </div>
 
       <div className="flex w-full max-w-3xl flex-col items-center">
