@@ -94,6 +94,7 @@ export interface AssessmentOption {
 export interface AssessmentQuestion {
   id: string;
   skillId: string; // which skill this measures
+  category?: string;
   prompt: string;
   type: AssessmentQuestionType;
   options: AssessmentOption[];
