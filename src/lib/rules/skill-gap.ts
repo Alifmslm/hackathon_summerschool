@@ -2,6 +2,7 @@ import type {
   AssessmentAnswers,
   AssessmentQuestion,
   CareerId,
+  ProjectDifficulty,
   SkillGap,
   SkillGapResult,
   SkillProfile,
@@ -72,6 +73,13 @@ export function computeSkillGap(careerId: CareerId, profile: SkillScore[]): Skil
     .slice(0, TOP_GAPS_COUNT);
 
   return { careerId, profile, gaps, topGaps };
+}
+
+/** Map an overall readiness score (0–100) to a difficulty level. */
+export function overallToDifficulty(overall: number): ProjectDifficulty {
+  if (overall >= 80) return "advanced";
+  if (overall >= 50) return "intermediate";
+  return "beginner";
 }
 
 /* ── helpers ─────────────────────────────────────────────────────────────── */
