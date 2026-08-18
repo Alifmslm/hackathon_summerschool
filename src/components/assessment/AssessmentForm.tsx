@@ -8,6 +8,7 @@ import { skillName } from "@/lib/data/careers";
 import { computeSkillGap, scoreAssessment } from "@/lib/rules/skill-gap";
 import { Button } from "@/components/ui/Button";
 import { OptionCard } from "@/components/ui/OptionCard";
+import { SegmentedProgress } from "@/components/ui/SegmentedProgress";
 
 /**
  * Per-career skill assessment (FE mockup).
@@ -29,7 +30,7 @@ export function AssessmentForm({
   const isLast = index === questions.length - 1;
   const chosen = answers[question.id];
   const hasAnswered = chosen != null;
-  const progress = (index + (hasAnswered ? 1 : 0)) / questions.length;
+  const completed = Object.keys(answers).length;
 
   function choose(optionId: string) {
     setAnswers((prev) => ({ ...prev, [question.id]: optionId }));
@@ -57,7 +58,7 @@ export function AssessmentForm({
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-xl flex-col px-6 py-12 sm:py-16">
-      <header className="mb-10">
+      <header className="mb-6">
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
             Skill assessment
@@ -69,47 +70,48 @@ export function AssessmentForm({
         <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
           {career.emoji} {career.name}
         </h1>
-        <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
-          <div
-            className="h-full rounded-full bg-brand transition-[width] duration-300 ease-out"
-            style={{ width: `${progress * 100}%` }}
+        <div className="mt-4">
+          <SegmentedProgress
+            steps={questions.length}
+            completed={completed}
+            label={`Question ${index + 1} of ${questions.length}`}
           />
         </div>
       </header>
 
       <section
         key={question.id}
-        className="flex flex-1 flex-col justify-center pb-10"
+        className="pb-8"
         aria-live="polite"
       >
-        <div className="animate-rise">
-          <span className="inline-flex items-center gap-1.5 rounded-md bg-indigo-100 px-2 py-1 text-xs font-semibold text-brand-dark">
-            <span className="size-1.5 rounded-full bg-brand" />
+        <div className="animate-rise rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <span className="inline-flex items-center gap-1.5 rounded-md bg-brand/10 px-2 py-1 text-xs font-semibold text-brand-dark">
+            <span className="size-1.5 rounded-full bg-secondary" />
             Measuring: {skillName(question.skillId)}
           </span>
-        </div>
-        <h2 className="animate-rise mt-3 text-lg font-semibold leading-snug text-slate-900 sm:text-xl">
-          {question.prompt}
-        </h2>
-        <div className="mt-5 flex flex-col gap-3">
-          {question.options.map((o, i) => (
-            <div
-              key={o.id}
-              className="animate-rise"
-              style={{ animationDelay: `${60 + i * 45}ms` }}
-            >
-              <OptionCard
-                letter={String.fromCharCode(65 + i)}
-                label={o.label}
-                selected={chosen === o.id}
-                onSelect={() => choose(o.id)}
-              />
-            </div>
-          ))}
+          <h2 className="mt-3 text-lg font-semibold leading-snug text-slate-900 sm:text-xl">
+            {question.prompt}
+          </h2>
+          <div className="mt-5 flex flex-col gap-3">
+            {question.options.map((o, i) => (
+              <div
+                key={o.id}
+                className="animate-rise"
+                style={{ animationDelay: `${60 + i * 45}ms` }}
+              >
+                <OptionCard
+                  letter={String.fromCharCode(65 + i)}
+                  label={o.label}
+                  selected={chosen === o.id}
+                  onSelect={() => choose(o.id)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <footer className="flex items-center gap-3">
+      <footer className="mt-auto flex items-center gap-3">
         {index === 0 ? (
           <Link
             href={ROUTES.careerResult}

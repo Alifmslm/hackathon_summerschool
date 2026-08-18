@@ -45,7 +45,7 @@ export default function ProjectPage() {
         </div>
       </header>
 
-      <article className="mt-8 rounded-2xl bg-slate-900 p-6 text-white shadow-sm sm:p-10">
+      <article className="mt-8 rounded-2xl bg-brand-dark p-6 text-white shadow-sm sm:p-10">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
           {PROJECT.tag}
         </p>
@@ -103,7 +103,7 @@ export default function ProjectPage() {
           <Button className="uppercase">Export project guide (PDF)</Button>
           <a
             href={ROUTES.skillGap}
-            className="inline-flex items-center justify-center rounded-lg border border-slate-600 px-5 py-2.5 text-sm font-medium uppercase text-slate-200 transition duration-150 ease-out hover:border-slate-400 hover:text-white active:scale-[0.98]"
+            className="inline-flex items-center justify-center rounded-lg border border-secondary/70 px-5 py-2.5 text-sm font-medium uppercase text-secondary transition duration-150 ease-out hover:border-secondary hover:text-white active:scale-[0.98]"
           >
             Back to gap analysis
           </a>

@@ -23,7 +23,7 @@ export function OptionCard({
       aria-pressed={selected}
       className={`group flex w-full items-center gap-3 rounded-xl border px-4 py-3.5 text-left transition duration-150 ease-out active:scale-[0.98] ${
         selected
-          ? "border-brand bg-indigo-50/70 shadow-sm"
+          ? "border-brand bg-brand/10 shadow-sm"
           : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
       }`}
     >

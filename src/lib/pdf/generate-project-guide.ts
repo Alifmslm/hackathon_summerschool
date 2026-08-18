@@ -37,7 +37,7 @@ export function renderGuideHtml(project: Project): string {
     <style>
       body { font-family: ui-sans-serif, system-ui, sans-serif; color: #111; max-width: 720px; margin: 40px auto; line-height: 1.5; }
       h1 { font-size: 24px; margin-bottom: 4px; }
-      h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .05em; color: #6366f1; margin-top: 28px; }
+      h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .05em; color: #0683F9; margin-top: 28px; }
       hr { border: none; border-top: 1px solid #e5e7eb; margin: 24px 0; }
       ul { padding-left: 18px; }
       .tag { font-size: 12px; color: #666; }

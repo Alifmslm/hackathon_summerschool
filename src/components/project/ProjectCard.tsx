@@ -15,7 +15,7 @@ export function ProjectCard({ project }: { project: Project }) {
         <p className="font-medium">Skills You&apos;ll Practice</p>
         <ul className="mt-2 flex flex-wrap gap-2">
           {project.skillsPracticed.map((s) => (
-            <li key={s} className="rounded-full bg-indigo-100 px-3 py-1 text-sm text-brand-dark">
+            <li key={s} className="rounded-full bg-brand/10 px-3 py-1 text-sm text-brand-dark">
               {s}
             </li>
           ))}

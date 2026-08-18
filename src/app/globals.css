@@ -4,10 +4,21 @@
 
 :root {
   color-scheme: light;
+  --font-stack-sans: "Stack Sans Text", ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  @apply font-sans text-slate-900 antialiased;
+  background-color: #eff5fc;
+}
+
+:focus-visible {
+  outline: 2px solid #0683f9;
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(6, 131, 249, 0.2);
 }
 
 /* Quiz step transitions — staggered fade/rise between questions */

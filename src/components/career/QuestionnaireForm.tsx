@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/Button";
 import { OptionCard } from "@/components/ui/OptionCard";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { ScoreRing } from "@/components/ui/ScoreRing";
+import { SegmentedProgress } from "@/components/ui/SegmentedProgress";
 
 /**
  * Career discovery quiz (FE mockup).
@@ -36,7 +37,7 @@ export function QuestionnaireForm({
   const isLast = index === questions.length - 1;
   const chosen = answers[question.id];
   const hasAnswered = chosen != null;
-  const progress = (index + (hasAnswered ? 1 : 0)) / questions.length;
+  const completed = Object.keys(answers).length;
 
   function choose(optionId: string) {
     setAnswers((prev) => ({ ...prev, [question.id]: optionId }));
@@ -63,7 +64,7 @@ export function QuestionnaireForm({
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-xl flex-col px-6 py-12 sm:py-16">
-      <header className="mb-10">
+      <header className="mb-6">
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
             Career discovery
@@ -73,41 +74,44 @@ export function QuestionnaireForm({
           </span>
         </div>
         <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Find your path</h1>
-        <div className="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
-          <div
-            className="h-full rounded-full bg-brand transition-[width] duration-300 ease-out"
-            style={{ width: `${progress * 100}%` }}
+        <div className="mt-4">
+          <SegmentedProgress
+            steps={questions.length}
+            completed={completed}
+            label={`Question ${index + 1} of ${questions.length}`}
           />
         </div>
       </header>
 
       <section
         key={question.id}
-        className="flex flex-1 flex-col justify-center pb-10"
+        className="pb-8"
         aria-live="polite"
       >
-        <h2 className="animate-rise text-lg font-semibold leading-snug text-slate-900 sm:text-xl">
-          {question.prompt}
-        </h2>
-        <div className="mt-5 flex flex-col gap-3">
-          {question.options.map((o, i) => (
-            <div
-              key={o.id}
-              className="animate-rise"
-              style={{ animationDelay: `${60 + i * 45}ms` }}
-            >
-              <OptionCard
-                letter={String.fromCharCode(65 + i)}
-                label={o.label}
-                selected={chosen === o.id}
-                onSelect={() => choose(o.id)}
-              />
-            </div>
-          ))}
+        <div className="animate-rise rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          <h2 className="text-lg font-semibold leading-snug text-slate-900 sm:text-xl">
+            {question.prompt}
+          </h2>
+          <div className="mt-5 flex flex-col gap-3">
+            {question.options.map((o, i) => (
+              <div
+                key={o.id}
+                className="animate-rise"
+                style={{ animationDelay: `${60 + i * 45}ms` }}
+              >
+                <OptionCard
+                  letter={String.fromCharCode(65 + i)}
+                  label={o.label}
+                  selected={chosen === o.id}
+                  onSelect={() => choose(o.id)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <footer className="flex items-center gap-3">
+      <footer className="mt-auto flex items-center gap-3">
         {index === 0 ? (
           <Link href={ROUTES.home} className="text-sm font-medium text-slate-500 hover:text-slate-800">
             Start over
@@ -151,7 +155,7 @@ function ResultView({
       <div className="animate-pop space-y-4">
         <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex items-center gap-4">
-            <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-indigo-50 text-3xl">
+            <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-brand/10 text-3xl">
               {recommended.emoji}
             </div>
             <div className="min-w-0 flex-1">

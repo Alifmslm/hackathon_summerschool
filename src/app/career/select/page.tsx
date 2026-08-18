@@ -24,9 +24,9 @@ export default function SelectCareerPage() {
           <Link
             key={career.id}
             href={ROUTES.assessment(career.id)}
-            className="group block rounded-2xl border border-slate-200 bg-white p-6 transition hover:border-brand hover:bg-indigo-50/40"
+            className="group block rounded-2xl border border-slate-200 bg-white p-6 transition hover:border-brand hover:bg-brand/5"
           >
-            <div className="flex size-12 items-center justify-center rounded-xl bg-indigo-50 text-2xl">
+            <div className="flex size-12 items-center justify-center rounded-xl bg-brand/10 text-2xl">
               {career.emoji}
             </div>
             <h2 className="mt-4 text-lg font-bold text-slate-900">{career.name}</h2>
