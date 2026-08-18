@@ -10,6 +10,36 @@ Many IT students know that they want to work in technology, but are often unsure
 
 This project aims to turn that uncertainty into an actionable roadmap.
 
+---
+
+## Live demo
+
+TODO: add the live website link here.
+
+---
+
+## Run locally
+
+You need Node.js 18 or later installed.
+
+1. Install dependencies.
+   ```
+   npm install
+   ```
+2. Start the dev server.
+   ```
+   npm run dev
+   ```
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+Other commands you can run:
+
+- `npm run build`, to create a production build.
+- `npm start`, to run the production build after `npm run build`.
+- `npm run lint`, to run ESLint.
+
+---
+
 Instead of simply recommending a career, IT Career Navigator takes users through a complete journey:
 
 **Career Discovery → Skill Assessment → Skill Gap Detection → Project Recommendation**
