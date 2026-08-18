@@ -891,50 +891,116 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
 
   /* ──────────────────────────── AI Engineer ──────────────────────────────── */
   {
-    id: "ai-churn-predictor",
+    id: "ai-ecommerce-support-beginner",
     careerId: "ai-engineer",
-    title: "Build and Serve a Customer Churn Predictor",
-    description:
-      "Take a raw customer dataset, clean it, train a model to predict churn, and expose it behind an API. Focuses on the full path from messy data to a deployed, callable model.",
-    skillsPracticed: ["APIs & Data Handling", "RAG & Vector Search", "Evaluation & Quality"],
-    coreRequirements: [
-      { id: "c1", label: "Predict whether a customer will churn from their profile." },
-      { id: "c2", label: "Report accuracy and at least one other metric." },
-      { id: "c3", label: "Expose predictions through a simple endpoint." },
-    ],
-    technicalRequirements: [
-      { id: "t1", label: "Build a reproducible data-cleaning pipeline." },
-      { id: "t2", label: "Split train/test and evaluate honestly." },
-      { id: "t3", label: "Serve the model via a REST API (FastAPI/Flask)." },
-      { id: "t4", label: "Document how to run it end-to-end." },
-    ],
-    matchedGaps: [],
-    primarySkillIds: ["apis", "rag", "ai-evaluation"],
-    difficulty: "intermediate",
-    referenceLinks: [],
-    suggestedTools: ["pandas", "scikit-learn", "FastAPI", "Jupyter"],
-  },
-  {
-    id: "ai-python-foundations",
-    careerId: "ai-engineer",
-    title: "Data Toolkit: Strengthen Python & Fundamentals",
-    description:
-      "Build a small command-line data toolkit (load, clean, summarise CSVs) to solidify Python and programming fundamentals before moving into modelling.",
-    skillsPracticed: ["Programming Fundamentals", "APIs & Data Handling"],
-    coreRequirements: [
-      { id: "c1", label: "Load a CSV and print summary statistics." },
-      { id: "c2", label: "Clean missing/invalid rows with clear rules." },
-      { id: "c3", label: "Let the user query the data from the CLI." },
-    ],
-    technicalRequirements: [
-      { id: "t1", label: "Organise code into functions/modules." },
-      { id: "t2", label: "Use numpy/pandas idiomatically." },
-      { id: "t3", label: "Add basic unit tests." },
-    ],
-    matchedGaps: [],
-    primarySkillIds: ["programming-fundamentals", "apis"],
     difficulty: "beginner",
-    referenceLinks: [],
-    suggestedTools: ["numpy", "pandas", "pytest", "Jupyter"],
+    title: "Build an E-Commerce Support Agent",
+    description:
+      "Build a chatbot that answers customer questions from a small help center. You will call an LLM API, write a system prompt that gives the agent a role and scope, load help center content into the prompt, and keep a conversation history so customers can ask follow-up questions.",
+    skillsPracticed: [
+      "LLMs & Prompting",
+      "APIs & Data Handling",
+      "RAG & Vector Search",
+      "Programming Fundamentals",
+    ],
+    coreRequirements: [
+      { id: "c1", label: "Answer questions about returns, delivery, payments, and account login" },
+      { id: "c2", label: "Refuse to answer questions that are outside the help center scope" },
+      { id: "c3", label: "Remember what was said earlier in the same conversation" },
+      { id: "c4", label: "Give a clear message when it does not have the answer" },
+    ],
+    technicalRequirements: [
+      { id: "t1", label: "Use the Gemini API for both text generation and embeddings" },
+      { id: "t2", label: "Store help center content as chunks and retrieve the top 2 by cosine similarity" },
+      { id: "t3", label: "Maintain conversation history as a list and send it with every request" },
+      { id: "t4", label: "Wrap the agent in a class with a chat() method" },
+    ],
+    referenceLinks: [
+      { title: "Gemini API quickstart", url: "https://ai.google.dev/gemini-api/docs/quickstart" },
+      { title: "Gemini embeddings guide", url: "https://ai.google.dev/gemini-api/docs/embeddings" },
+      { title: "Google Colab notebook", url: "https://colab.research.google.com/drive/1hXm4qvkH7rO4LSbklnt0THspQjWw3l0t?usp=sharing" },
+    ],
+    suggestedTools: ["Google Colab", "Gemini API", "Python"],
+    matchedGaps: [],
+    primarySkillIds: ["llm-fundamentals", "apis", "rag", "programming-fundamentals"],
+  },
+ 
+  {
+    id: "ai-ecommerce-support-intermediate",
+    careerId: "ai-engineer",
+    difficulty: "intermediate",
+    title: "Build and Deploy an E-Commerce Support Agent with Tools",
+    description:
+      "Extend the beginner agent with real tool use and a live deployment. The agent will look up order status and open support tickets through API calls, handle errors without hallucinating, escalate when it cannot help, and run behind a FastAPI endpoint that anyone can call from a browser or another service.",
+    skillsPracticed: [
+      "LLMs & Prompting",
+      "APIs & Data Handling",
+      "RAG & Vector Search",
+      "AI Agents & Orchestration",
+      "Evaluation & Quality",
+      "Deployment",
+    ],
+    coreRequirements: [
+      { id: "c1", label: "Answer help center questions using a vector database" },
+      { id: "c2", label: "Look up a real or mock order by order ID and return its status" },
+      { id: "c3", label: "Open a support ticket and return a confirmation ticket ID" },
+      { id: "c4", label: "Escalate to a human when a tool call fails or the question is out of scope" },
+      { id: "c5", label: "Expose the agent through a POST endpoint that accepts a message and returns a response" },
+    ],
+    technicalRequirements: [
+      { id: "t1", label: "Use a vector database (Chroma or similar) instead of a Python list for retrieval" },
+      { id: "t2", label: "Implement at least two tools: order_lookup(order_id) and create_ticket(summary)" },
+      { id: "t3", label: "Handle tool call failures without hallucinating over the error" },
+      { id: "t4", label: "Serve the agent as a FastAPI app with a /chat POST endpoint" },
+      { id: "t5", label: "Store API keys and secrets in environment variables, not in the code" },
+      { id: "t6", label: "Write a test file that checks escalation fires on out-of-scope questions" },
+    ],
+    referenceLinks: [
+      { title: "FastAPI getting started", url: "https://fastapi.tiangolo.com/tutorial/" },
+      { title: "Chroma vector database docs", url: "https://docs.trychroma.com" },
+      { title: "Google Colab notebook", url: "https://colab.research.google.com/drive/1YHgC_NNuMG4HMgWeObKr29zzrIKHjIsf?usp=sharing"}
+    ],
+    suggestedTools: ["FastAPI", "Chroma", "Gemini API", "Railway or Render (deployment)"],
+    matchedGaps: [],
+    primarySkillIds: ["ai-agents", "apis", "deployment", "ai-evaluation"],
+  },
+ 
+  {
+    id: "ai-ecommerce-support-advanced",
+    careerId: "ai-engineer",
+    difficulty: "advanced",
+    title: "Production-Ready E-Commerce Support Agent",
+    description:
+      "Take the intermediate agent and make it reliable enough to trust in production. Add a relevance floor that escalates instead of guessing, a semantic cache that skips the LLM for repeated questions, a full eval harness with 30 labeled cases, token cost tracking per request, and a CI step that blocks deploys when eval results drop.",
+    skillsPracticed: [
+      "LLMs & Prompting",
+      "APIs & Data Handling",
+      "RAG & Vector Search",
+      "AI Agents & Orchestration",
+      "Evaluation & Quality",
+      "Deployment",
+    ],
+    coreRequirements: [
+      { id: "c1", label: "Answer help center questions with a grounded response that cites the source section" },
+      { id: "c2", label: "Escalate automatically when no retrieved chunk scores above the relevance threshold" },
+      { id: "c3", label: "Return a cached answer for questions that closely match a previous query" },
+      { id: "c4", label: "Pass at least 85% of a 30-question eval set covering answerable, unanswerable, and adversarial cases" },
+      { id: "c5", label: "Log the token count and estimated cost for every request" },
+    ],
+    technicalRequirements: [
+      { id: "t1", label: "Set a cosine similarity threshold and escalate when the top chunk scores below it" },
+      { id: "t2", label: "Build a semantic cache: embed each incoming question and return a cached answer when similarity to a past question is above a set threshold" },
+      { id: "t3", label: "Write an eval harness with at least 30 labeled cases and report pass rate, escalation precision, and escalation recall" },
+      { id: "t4", label: "Add a CI step that runs the eval harness and blocks deploy if pass rate drops below 85%" },
+      { id: "t5", label: "Containerize the app with Docker and add a /health endpoint" },
+      { id: "t6", label: "Cap the agent loop at 5 steps and force escalation if it does not resolve within that limit" },
+    ],
+    referenceLinks: [
+      { title: "Ragas — eval framework for RAG", url: "https://docs.ragas.io" },
+      { title: "Google Colab Notebook", url: "https://colab.research.google.com/drive/1bly0xF802WDEWf9HQzY2EpeqpddJYnoH?usp=sharing" },
+    ],
+    suggestedTools: ["Docker", "GitHub Actions", "Ragas", "Gemini API", "FastAPI"],
+    matchedGaps: [],
+    primarySkillIds: ["ai-evaluation", "deployment", "rag", "ai-agents"],
   },
 ];
