@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { SkillGap } from "@/types";
 import { ROUTES } from "@/constants";
+import { skillDescription } from "@/lib/data/careers";
 import { ScoreRing } from "@/components/ui/ScoreRing";
 
 /** Skill-gap result screen (Step 3). Reads the stashed assessment result. */
@@ -20,6 +21,16 @@ const BADGE: Record<SkillGap["severity"], { className: string; label: string }> 
   medium: { className: "bg-secondary", label: "Worth improving" },
   low: { className: "bg-emerald-500", label: "On track" },
 };
+
+/** Short line summarising the user's level for one topic vs its target. */
+function levelNote(current: number, target: number): string {
+  const diff = current - target;
+  if (diff >= 15) return "You're comfortably above this role's target. Keep it up.";
+  if (diff >= 0) return "You're right at the level this role expects.";
+  if (diff >= -15) return "Slightly below target — a small push will close this.";
+  if (diff >= -35) return "Below target — worth making this a development priority.";
+  return "Well below target — a key skill to build up.";
+}
 
 export default function SkillGapPage() {
   const [result, setResult] = useState<StashedResult | null>(null);
@@ -165,18 +176,30 @@ function GapDashboard({ result }: { result: StashedResult }) {
           <div className="mt-5 space-y-6">
             {sorted.map((r) => {
               const gap = r.target - r.current;
+              const noGap = gap <= 0;
               return (
                 <div key={r.skillId}>
                   <div className="flex items-baseline justify-between gap-2">
                     <p className="text-sm font-medium text-slate-800">{r.name}</p>
-                    <span className="text-xs font-bold uppercase tracking-wide text-red-600">
-                      {gap}% gap
+                    <span
+                      className={`text-xs font-bold uppercase tracking-wide ${
+                        noGap ? "text-emerald-600" : "text-red-600"
+                      }`}
+                    >
+                      {noGap ? "No gap" : `${gap}% gap`}
                     </span>
                   </div>
+                  {skillDescription(r.skillId) && (
+                    <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                      {skillDescription(r.skillId)}
+                    </p>
+                  )}
                   <div className="relative mt-2 h-3.5 w-full overflow-hidden rounded-full bg-slate-200">
-                    {/* target (pink/red overlay = the gap) */}
+                    {/* target (red overlay = the gap) */}
                     <div
-                      className="absolute inset-y-0 left-0 rounded-full bg-red-300/80"
+                      className={`absolute inset-y-0 left-0 rounded-full ${
+                        noGap ? "bg-emerald-200/70" : "bg-red-300/80"
+                      }`}
                       style={{ width: `${r.target}%` }}
                     />
                     {/* current (blue bar on top) */}
@@ -188,6 +211,13 @@ function GapDashboard({ result }: { result: StashedResult }) {
                   <div className="mt-1 text-xs tabular-nums text-slate-500">
                     Current {r.current}% / Target {r.target}%
                   </div>
+                  <p
+                    className={`mt-1 text-xs ${
+                      noGap ? "font-medium text-emerald-600" : "text-slate-500"
+                    }`}
+                  >
+                    {levelNote(r.current, r.target)}
+                  </p>
                 </div>
               );
             })}
