@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { QuestionnaireAnswers, QuestionnaireQuestion } from "@/types";
 import { ROUTES } from "@/constants";
@@ -18,6 +18,7 @@ import { SegmentedProgress } from "@/components/ui/SegmentedProgress";
 export function QuestionnaireForm({ questions }: { questions: QuestionnaireQuestion[] }) {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<QuestionnaireAnswers>({});
+  const advanceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   /**
    * Browser-navigation guard: once the quiz is entered, browser back/forward
@@ -37,18 +38,42 @@ export function QuestionnaireForm({ questions }: { questions: QuestionnaireQuest
   const chosen = answers[question.id];
   const hasAnswered = chosen != null;
 
-  function choose(optionId: string) {
-    setAnswers((prev) => ({ ...prev, [question.id]: optionId }));
+  // Clears any pending auto-advance so Back/unmount can't fire a stale
+  // navigation after the user has already moved on.
+  function clearPendingAdvance() {
+    if (advanceTimeoutRef.current != null) {
+      clearTimeout(advanceTimeoutRef.current);
+      advanceTimeoutRef.current = null;
+    }
   }
+  useEffect(() => clearPendingAdvance, []);
 
-  function next() {
-    if (!hasAnswered) return;
+  function advance(currentAnswers: QuestionnaireAnswers) {
+    clearPendingAdvance();
     if (!isLast) {
       setIndex((i) => i + 1);
       return;
     }
-    sessionStorage.setItem("careerRecommendation", JSON.stringify(recommendCareer(answers)));
+    sessionStorage.setItem("careerRecommendation", JSON.stringify(recommendCareer(currentAnswers)));
     window.location.href = ROUTES.careerResult;
+  }
+
+  function choose(optionId: string) {
+    const nextAnswers = { ...answers, [question.id]: optionId };
+    setAnswers(nextAnswers);
+    clearPendingAdvance();
+    // Brief delay so the selection's highlight is visible before advancing.
+    advanceTimeoutRef.current = setTimeout(() => advance(nextAnswers), 350);
+  }
+
+  function goBack() {
+    clearPendingAdvance();
+    setIndex((i) => i - 1);
+  }
+
+  function next() {
+    if (!hasAnswered) return;
+    advance(answers);
   }
 
   return (
@@ -103,7 +128,7 @@ export function QuestionnaireForm({ questions }: { questions: QuestionnaireQuest
             Start over
           </Link>
         ) : (
-          <Button variant="secondary" onClick={() => setIndex((i) => i - 1)}>
+          <Button variant="secondary" onClick={goBack}>
             Back
           </Button>
         )}
