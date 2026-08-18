@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { SkillGap } from "@/types";
 import { ROUTES } from "@/constants";
 import { skillDescription } from "@/lib/data/careers";
+import { overallToDifficulty } from "@/lib/rules/skill-gap";
 import { ScoreRing } from "@/components/ui/ScoreRing";
 
 /** Skill-gap result screen (Step 3). Reads the stashed assessment result. */
@@ -54,9 +55,7 @@ const LEVELS: Record<ScoreLevel, { label: string; className: string; color: stri
 
 /** Map an overall readiness score (0–100) to one of three levels. */
 function scoreLevel(overall: number): ScoreLevel {
-  if (overall >= 80) return "advanced";
-  if (overall >= 50) return "intermediate";
-  return "beginner";
+  return overallToDifficulty(overall);
 }
 
 export default function SkillGapPage() {

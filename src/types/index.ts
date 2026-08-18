@@ -146,7 +146,7 @@ export interface ProjectRequirement {
   label: string;
 }
 
-/** Skill level a project is suited to (informational — does not affect matching). */
+/** Skill level a project is suited to — used to filter candidates in `recommendProject`. */
 export type ProjectDifficulty = "beginner" | "intermediate" | "advanced";
 
 /** Curated inspiration link shown in the UI / PDF guide. */
@@ -171,8 +171,9 @@ export interface Project {
 
 /**
  * The static template stored in `lib/data/projects.ts`. The recommendation
- * engine selects a template by overlap with the user's top gaps and returns a
- * `Project`. `difficulty` is informational and does not affect matching.
+ * engine first narrows candidates to the user's identified `difficulty`
+ * level, then selects among them by overlap with the user's top gaps and
+ * returns a `Project`.
  */
 export interface ProjectTemplate extends Project {
   careerId: CareerId;
@@ -236,6 +237,7 @@ export interface SkillGapResponse {
 /** POST /api/project/recommend */
 export interface RecommendProjectRequest {
   careerId: CareerId;
+  overall: number; // readiness score (0–100) — maps to the target difficulty
   gaps: SkillGap[];
 }
 export interface RecommendProjectResponse {
