@@ -21,6 +21,12 @@ interface StashedResult {
   gaps: SkillGap[];
 }
 
+const DIFFICULTY: Record<string, { label: string; className: string }> = {
+  beginner: { label: "Beginner", className: "bg-secondary text-brand-dark" },
+  intermediate: { label: "Intermediate", className: "bg-secondary/80 text-brand-dark" },
+  advanced: { label: "Advanced", className: "bg-secondary text-brand-dark" },
+};
+
 export default function ProjectPage() {
   const [result, setResult] = useState<StashedResult | null>(null);
   const [loading, setLoading] = useState(true);
@@ -108,14 +114,21 @@ function ProjectBrief({ result }: { result: StashedResult }) {
       </header>
 
       <article className="mt-8 rounded-2xl bg-brand-dark p-6 text-white shadow-sm sm:p-10">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-          CURATED_BRIEF / {careerId.toUpperCase()}
-        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
+            CURATED_BRIEF / {careerId.toUpperCase()}
+          </p>
+          <span
+            className={`rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide ${project.difficulty ? DIFFICULTY[project.difficulty].className : "bg-white/20 text-white"}`}
+          >
+            {project.difficulty ? DIFFICULTY[project.difficulty].label : "Curated"}
+          </span>
+        </div>
         <h2 className="mt-3 text-3xl font-bold tracking-tight">{project.title}</h2>
         <p className="mt-4 leading-relaxed text-slate-300">{project.description}</p>
 
         <section className="mt-10">
-          <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+          <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
             Skills you&apos;ll practice
           </h3>
           <div className="mt-3 grid gap-1 sm:grid-cols-2">
@@ -129,13 +142,13 @@ function ProjectBrief({ result }: { result: StashedResult }) {
 
         <div className="mt-10 grid gap-10 sm:grid-cols-2">
           <section>
-            <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
               Core requirements
             </h3>
             <ul className="mt-3 space-y-2.5">
               {project.coreRequirements.map((req) => (
                 <li key={req.id} className="flex items-start gap-2.5 text-sm text-slate-200">
-                  <span aria-hidden className="mt-0.5 text-slate-500">
+                  <span aria-hidden className="mt-0.5 text-white">
                     ☐
                   </span>
                   {req.label}
@@ -145,13 +158,13 @@ function ProjectBrief({ result }: { result: StashedResult }) {
           </section>
 
           <section>
-            <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
               Technical requirements
             </h3>
             <ul className="mt-3 space-y-2.5">
               {project.technicalRequirements.map((req) => (
                 <li key={req.id} className="flex items-start gap-2.5 text-sm text-slate-200">
-                  <span aria-hidden className="mt-0.5 text-slate-500">
+                  <span aria-hidden className="mt-0.5 text-white">
                     ☐
                   </span>
                   {req.label}
@@ -160,6 +173,46 @@ function ProjectBrief({ result }: { result: StashedResult }) {
             </ul>
           </section>
         </div>
+
+        {project.suggestedTools && project.suggestedTools.length > 0 && (
+          <section className="mt-10">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
+              Suggested tools
+            </h3>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {project.suggestedTools.map((tool) => (
+                <span
+                  key={tool}
+                  className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-200"
+                >
+                  {tool}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {project.referenceLinks && project.referenceLinks.length > 0 && (
+          <section className="mt-8">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
+              References & inspiration
+            </h3>
+            <ul className="mt-3 space-y-1.5">
+              {project.referenceLinks.map((ref) => (
+                <li key={ref.url}>
+                  <a
+                    href={ref.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-secondary underline-offset-2 hover:underline"
+                  >
+                    {ref.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button className="uppercase">Export project guide (PDF)</Button>

@@ -74,7 +74,7 @@ export const SKILLS: Record<string, Skill> = {
   },
   apis: {
     id: "apis",
-    name: "APIs",
+    name: "APIs & Data Handling",
     description: "Exposing models and data through endpoints other apps can call.",
   },
   "ai-ml-tools": {
@@ -83,13 +83,35 @@ export const SKILLS: Record<string, Skill> = {
     description:
       "The libraries and platforms (numpy, scikit-learn, PyTorch) used to build AI systems.",
   },
-  "programming-fundamentals": { id: "programming-fundamentals", name: "Programming Fundamentals" },
-  "llm-fundamentals": { id: "llm-fundamentals", name: "LLMs & Prompting" },
-  apis: { id: "apis", name: "APIs & Data Handling" },
-  rag: { id: "rag", name: "RAG & Vector Search" },
-  "ai-agents": { id: "ai-agents", name: "AI Agents & Orchestration" },
-  "ai-evaluation": { id: "ai-evaluation", name: "Evaluation & Quality" },
-  deployment: { id: "deployment", name: "Deployment & ML Fundamentals" },
+  "llm-fundamentals": {
+    id: "llm-fundamentals",
+    name: "LLMs & Prompting",
+    description:
+      "Prompting, token budgets and LLM APIs — how to get reliable behaviour out of large language models.",
+  },
+  rag: {
+    id: "rag",
+    name: "RAG & Vector Search",
+    description:
+      "Retrieval-augmented generation: chunking, embeddings and vector search over your data.",
+  },
+  "ai-agents": {
+    id: "ai-agents",
+    name: "AI Agents & Orchestration",
+    description:
+      "Coordinating models, tools and memory into multi-step agent workloads.",
+  },
+  "ai-evaluation": {
+    id: "ai-evaluation",
+    name: "Evaluation & Quality",
+    description:
+      "Measuring outputs with metrics, evals and quality gates before shipping.",
+  },
+  deployment: {
+    id: "deployment",
+    name: "Deployment & MLOps",
+    description: "Shipping, serving and monitoring models in production reliably.",
+  },
 };
 
 export function skillName(skillId: string): string {
