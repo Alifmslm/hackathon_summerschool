@@ -1,15 +1,23 @@
-import type { CareerId, Project, SkillGap } from "@/types";
+import type { CareerId, Project, ProjectDifficulty, SkillGap } from "@/types";
 import { PROJECT_TEMPLATES } from "@/lib/data/projects";
 
 /**
  * Pick the best project for a user's skill gaps.
  *
- * Score each template by how much its `primarySkillIds` overlap the user's
+ * Candidates are first narrowed to the user's identified difficulty level
+ * (falling back to the full career pool if none exist at that level), then
+ * scored by how much each template's `primarySkillIds` overlap the user's
  * gaps — weighted by gap size so bigger gaps pull harder. The winning template
  * is returned as a `Project` with `matchedGaps` filled in.
  */
-export function recommendProject(careerId: CareerId, gaps: SkillGap[]): Project {
-  const candidates = PROJECT_TEMPLATES.filter((t) => t.careerId === careerId);
+export function recommendProject(
+  careerId: CareerId,
+  gaps: SkillGap[],
+  difficulty: ProjectDifficulty
+): Project {
+  const allCandidates = PROJECT_TEMPLATES.filter((t) => t.careerId === careerId);
+  const atLevel = allCandidates.filter((t) => t.difficulty === difficulty);
+  const candidates = atLevel.length > 0 ? atLevel : allCandidates;
   const gapWeight = new Map(gaps.map((g) => [g.skillId, g.gap]));
 
   let best = candidates[0];

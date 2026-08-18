@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { SkillGap } from "@/types";
 import { ROUTES, isCareerId } from "@/constants";
 import { recommendProject } from "@/lib/rules/project-recommendation";
+import { overallToDifficulty } from "@/lib/rules/skill-gap";
 import { CAREERS } from "@/lib/data/careers";
 import { Button } from "@/components/ui/Button";
 
@@ -18,6 +19,7 @@ import { Button } from "@/components/ui/Button";
 interface StashedResult {
   careerId: string;
   careerName: string;
+  overall: number;
   gaps: SkillGap[];
 }
 
@@ -87,7 +89,7 @@ function ProjectPrompt() {
 }
 
 function ProjectBrief({ result }: { result: StashedResult }) {
-  const { careerId, careerName, gaps } = result;
+  const { careerId, careerName, overall, gaps } = result;
   const career = CAREERS.find((c) => c.id === careerId);
   const project = isCareerId(careerId) ? recommendProject(careerId, gaps) : null;
   const [exporting, setExporting] = useState(false);
