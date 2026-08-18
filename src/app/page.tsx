@@ -7,7 +7,7 @@ import { ROUTES } from "@/constants";
  */
 export default function HomePage() {
   return (
-    <main className="mx-auto flex max-w-3xl flex-col items-center px-6 py-20 text-center">
+    <main className="mx-auto flex min-h-screen w-full max-w-3xl flex-col items-center justify-center px-6 py-20 text-center">
       <span className="mb-4 rounded-full bg-brand/10 px-3 py-1 text-sm font-medium text-brand-dark">
         IT Career Navigator
       </span>
