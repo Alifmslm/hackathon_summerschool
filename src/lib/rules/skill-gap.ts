@@ -66,8 +66,10 @@ export function computeSkillGap(careerId: CareerId, profile: SkillScore[]): Skil
     };
   });
 
-  gaps.sort((a, b) => b.gap - a.gap);
-  const topGaps = gaps.filter((g) => g.gap > 0).slice(0, TOP_GAPS_COUNT);
+  const topGaps = [...gaps]
+    .sort((a, b) => b.gap - a.gap)
+    .filter((g) => g.gap > 0)
+    .slice(0, TOP_GAPS_COUNT);
 
   return { careerId, profile, gaps, topGaps };
 }
