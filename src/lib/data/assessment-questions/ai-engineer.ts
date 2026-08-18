@@ -21,7 +21,7 @@ export const AI_ENGINEER_ASSESSMENT: AssessmentQuestion[] = [
 
   {
     id: "python-1",
-    skillId: "python",
+    skillId: "programming-fundamentals",
     category: "Python & Engineering Foundations",
     prompt: "How comfortable are you writing Python?",
     type: "single",
@@ -35,7 +35,7 @@ export const AI_ENGINEER_ASSESSMENT: AssessmentQuestion[] = [
 
   {
     id: "git-1",
-    skillId: "git-version-control",
+    skillId: "programming-fundamentals",
     category: "Python & Engineering Foundations",
     prompt: "How do you use version control in your projects?",
     type: "single",
@@ -51,7 +51,7 @@ export const AI_ENGINEER_ASSESSMENT: AssessmentQuestion[] = [
 
   {
     id: "llm-api-1",
-    skillId: "llm-apis",
+    skillId: "llm-fundamentals",
     category: "LLMs & Prompting",
     prompt: "Have you called an LLM API (OpenAI, Anthropic, Gemini, etc.) in your own code?",
     type: "single",
@@ -65,7 +65,7 @@ export const AI_ENGINEER_ASSESSMENT: AssessmentQuestion[] = [
 
   {
     id: "prompt-1",
-    skillId: "prompt-engineering",
+    skillId: "llm-fundamentals",
     category: "LLMs & Prompting",
     prompt: "How do you approach writing prompts for an LLM?",
     type: "single",
@@ -127,7 +127,7 @@ export const AI_ENGINEER_ASSESSMENT: AssessmentQuestion[] = [
 
   {
     id: "orchestration-1",
-    skillId: "llm-orchestration",
+    skillId: "ai-agents",
     category: "AI Agents & Orchestration",
     prompt: "Have you used LangChain, LlamaIndex, or a similar orchestration framework?",
     type: "single",
@@ -172,37 +172,3 @@ export const AI_ENGINEER_ASSESSMENT: AssessmentQuestion[] = [
   },
 
 ];
-
-/**
- * Skill IDs and their display names, for use in the gap detection screen.
- * Matches the `skillId` values used in the questions above.
- */
-export const AI_ENGINEER_SKILLS: Record<string, string> = {
-  "python":                 "Python",
-  "git-version-control":    "Git & Version Control",
-  "llm-apis":               "LLM APIs",
-  "prompt-engineering":     "Prompt Engineering",
-  "apis":                   "REST APIs & Backend",
-  "data-processing":        "Data Handling",
-  "rag":                    "RAG Pipelines",
-  "embeddings-vector-search": "Embeddings & Vector Search",
-  "ai-agents":              "AI Agents",
-  "llm-orchestration":      "LLM Orchestration",
-  "ai-evaluation":          "AI Evaluation",
-  "deployment":             "Deployment",
-  "ml-fundamentals":        "ML Fundamentals",
-};
-
-/**
- * Category ordering for the assessment UI.
- * Render a section header when the category changes between questions.
- */
-export const AI_ENGINEER_CATEGORIES = [
-  "Python & Engineering Foundations",
-  "LLMs & Prompting",
-  "APIs & Data Handling",
-  "RAG & Vector Search",
-  "AI Agents & Orchestration",
-  "Evaluation & Quality",
-  "Deployment & ML Fundamentals",
-] as const;
