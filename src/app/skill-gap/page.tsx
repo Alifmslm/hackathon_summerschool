@@ -34,10 +34,22 @@ function levelNote(current: number, target: number): string {
 
 type ScoreLevel = "beginner" | "intermediate" | "advanced";
 
-const LEVELS: Record<ScoreLevel, { label: string; className: string }> = {
-  beginner: { label: "Beginner", className: "bg-red-100 text-red-700" },
-  intermediate: { label: "Intermediate", className: "bg-amber-100 text-amber-700" },
-  advanced: { label: "Advanced", className: "bg-emerald-100 text-emerald-700" },
+const LEVELS: Record<ScoreLevel, { label: string; className: string; color: string }> = {
+  beginner: {
+    label: "Beginner",
+    className: "bg-red-100 text-red-700",
+    color: "#ef4444",
+  },
+  intermediate: {
+    label: "Intermediate",
+    className: "bg-amber-100 text-amber-700",
+    color: "#f59e0b",
+  },
+  advanced: {
+    label: "Advanced",
+    className: "bg-emerald-100 text-emerald-700",
+    color: "#10b981",
+  },
 };
 
 /** Map an overall readiness score (0–100) to one of three levels. */
@@ -133,7 +145,7 @@ function GapDashboard({ result }: { result: StashedResult }) {
         <div className="space-y-6">
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex items-center gap-5">
-              <ScoreRing value={overall} size={96} />
+              <ScoreRing value={overall} size={96} color={LEVELS[scoreLevel(overall)].color} />
               <div>
                 <h2 className="text-lg font-bold leading-tight text-slate-900">
                   {careerName}
@@ -228,16 +240,18 @@ function GapDashboard({ result }: { result: StashedResult }) {
                       style={{ width: `${r.current}%` }}
                     />
                   </div>
-                  <div className="mt-1 text-xs tabular-nums text-slate-500">
-                    Current {r.current}% / Target {r.target}%
+                  <div className="mt-1 flex items-center justify-between gap-2 text-xs">
+                    <span className="tabular-nums text-slate-500">
+                      Current {r.current}% / Target {r.target}%
+                    </span>
+                    <span
+                      className={`${
+                        noGap ? "font-medium text-emerald-600" : "text-slate-500"
+                      }`}
+                    >
+                      {levelNote(r.current, r.target)}
+                    </span>
                   </div>
-                  <p
-                    className={`mt-1 text-xs ${
-                      noGap ? "font-medium text-emerald-600" : "text-slate-500"
-                    }`}
-                  >
-                    {levelNote(r.current, r.target)}
-                  </p>
                 </div>
               );
             })}

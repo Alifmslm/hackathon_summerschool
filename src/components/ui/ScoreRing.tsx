@@ -5,10 +5,12 @@ export function ScoreRing({
   value,
   size = 96,
   label,
+  color = "#0683F9",
 }: {
   value: number; // 0–100
   size?: number;
   label?: string;
+  color?: string; // arc colour (default brand blue)
 }) {
   const pct = Math.min(100, Math.max(0, value));
   const stroke = 9;
@@ -32,7 +34,7 @@ export function ScoreRing({
           cy={size / 2}
           r={r}
           fill="none"
-          stroke="#0683F9"
+          stroke={color}
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={c}
