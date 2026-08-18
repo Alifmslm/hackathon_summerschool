@@ -32,6 +32,21 @@ function levelNote(current: number, target: number): string {
   return "Well below target — a key skill to build up.";
 }
 
+type ScoreLevel = "beginner" | "intermediate" | "advanced";
+
+const LEVELS: Record<ScoreLevel, { label: string; className: string }> = {
+  beginner: { label: "Beginner", className: "bg-red-100 text-red-700" },
+  intermediate: { label: "Intermediate", className: "bg-amber-100 text-amber-700" },
+  advanced: { label: "Advanced", className: "bg-emerald-100 text-emerald-700" },
+};
+
+/** Map an overall readiness score (0–100) to one of three levels. */
+function scoreLevel(overall: number): ScoreLevel {
+  if (overall >= 80) return "advanced";
+  if (overall >= 50) return "intermediate";
+  return "beginner";
+}
+
 export default function SkillGapPage() {
   const [result, setResult] = useState<StashedResult | null>(null);
   const [loading, setLoading] = useState(true);
@@ -124,6 +139,11 @@ function GapDashboard({ result }: { result: StashedResult }) {
                   {careerName}
                 </h2>
                 <p className="text-sm font-semibold text-brand">Readiness Score</p>
+                <span
+                  className={`mt-1.5 inline-block rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide ${LEVELS[scoreLevel(overall)].className}`}
+                >
+                  {LEVELS[scoreLevel(overall)].label}
+                </span>
               </div>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-slate-600">
@@ -190,7 +210,7 @@ function GapDashboard({ result }: { result: StashedResult }) {
                     </span>
                   </div>
                   {skillDescription(r.skillId) && (
-                    <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                    <p className="mt-1 text-xs leading-relaxed text-slate-700">
                       {skillDescription(r.skillId)}
                     </p>
                   )}
