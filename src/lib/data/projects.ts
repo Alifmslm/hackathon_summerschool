@@ -958,8 +958,7 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
     referenceLinks: [
       { title: "FastAPI getting started", url: "https://fastapi.tiangolo.com/tutorial/" },
       { title: "Chroma vector database docs", url: "https://docs.trychroma.com" },
-      { title: "Gemini function calling guide", url: "https://ai.google.dev/gemini-api/docs/function-calling" },
-      { title: "Anthropic — Building effective agents", url: "https://www.anthropic.com/engineering/building-effective-agents" },
+      { title: "Google Colab notebook", url: "https://colab.research.google.com/drive/1YHgC_NNuMG4HMgWeObKr29zzrIKHjIsf?usp=sharing"}
     ],
     suggestedTools: ["FastAPI", "Chroma", "Gemini API", "Railway or Render (deployment)"],
     matchedGaps: [],
@@ -997,10 +996,8 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
       { id: "t6", label: "Cap the agent loop at 5 steps and force escalation if it does not resolve within that limit" },
     ],
     referenceLinks: [
-      { title: "Anthropic — customer support agent system design", url: "https://github.com/aishwaryanr/awesome-generative-ai-guide/tree/main/interview_prep/system-design/customer-support-agent" },
       { title: "Ragas — eval framework for RAG", url: "https://docs.ragas.io" },
-      { title: "Docker getting started", url: "https://docs.docker.com/get-started/" },
-      { title: "GitHub Actions quickstart", url: "https://docs.github.com/en/actions/writing-workflows/quickstart" },
+      { title: "Google Colab Notebook", url: "https://colab.research.google.com/drive/1bly0xF802WDEWf9HQzY2EpeqpddJYnoH?usp=sharing" },
     ],
     suggestedTools: ["Docker", "GitHub Actions", "Ragas", "Gemini API", "FastAPI"],
     matchedGaps: [],
