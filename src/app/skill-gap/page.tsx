@@ -92,9 +92,13 @@ function AssessmentPrompt() {
 function GapDashboard({ result }: { result: StashedResult }) {
   const { careerId, careerName, overall, gaps } = result;
 
-  // Backend sorts gaps biggest-first; sort defensively.
-  const sorted = [...gaps].sort((a, b) => b.gap - a.gap);
-  const biggest = sorted.filter((g) => g.gap > 0).slice(0, 3);
+  // Analysis list: lowest gap first (ascending).
+  const sorted = [...gaps].sort((a, b) => a.gap - b.gap);
+  // "Biggest gaps" panel keeps the largest gaps, biggest first.
+  const biggest = [...gaps]
+    .sort((a, b) => b.gap - a.gap)
+    .filter((g) => g.gap > 0)
+    .slice(0, 3);
 
   return (
     <>
