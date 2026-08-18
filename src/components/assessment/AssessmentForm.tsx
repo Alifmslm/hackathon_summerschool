@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import type { AssessmentAnswers, AssessmentQuestion, Career } from "@/types";
 import { ROUTES } from "@/constants";
 import { skillName } from "@/lib/data/careers";
@@ -26,15 +25,33 @@ export function AssessmentForm({
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<AssessmentAnswers>({});
 
+  // Tracks the synthetic history entries pinned by the guard so Cancel can
+  // pop exactly those and return to the previous page.
+  const pinnedCountRef = useRef(0);
+  const allowLeaveRef = useRef(false);
+  const canGoBackRef = useRef(false);
+
   /**
    * Browser-navigation guard: once the assessment is entered, browser
    * back/forward cannot move between questions or leave the page. A pinned
-   * history entry is re-asserted on every popstate, so the only way to navigate
-   * is the in-page Back / Continue buttons.
+   * history entry is re-asserted on every popstate (unless the app itself is
+   * navigating away via Cancel), so the only way to navigate is in-page.
    */
   useEffect(() => {
+    // Can we return to a previous page? True when the user navigated here from
+    // inside the app (history entries exist) or via an in-app referrer.
+    canGoBackRef.current =
+      window.history.length > 1 ||
+      (document.referrer.length > 0 &&
+        document.referrer.startsWith(window.location.origin));
+
     history.pushState({ assessmentBlocked: true }, "");
-    const onPopState = () => history.pushState({ assessmentBlocked: true }, "");
+    pinnedCountRef.current = 1;
+    const onPopState = () => {
+      if (allowLeaveRef.current) return;
+      history.pushState({ assessmentBlocked: true }, "");
+      pinnedCountRef.current += 1;
+    };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
@@ -46,6 +63,20 @@ export function AssessmentForm({
 
   function choose(optionId: string) {
     setAnswers((prev) => ({ ...prev, [question.id]: optionId }));
+  }
+
+  /**
+   * Leave the assessment. If the user came from inside the app, return to the
+   * page they came from; otherwise (direct visit / bookmark / refresh) fall
+   * back to the career-select screen.
+   */
+  function cancel() {
+    allowLeaveRef.current = true;
+    if (canGoBackRef.current) {
+      history.go(-pinnedCountRef.current);
+    } else {
+      window.location.href = ROUTES.selectCareer;
+    }
   }
 
   function next() {
@@ -126,12 +157,9 @@ export function AssessmentForm({
 
       <footer className="mt-auto flex items-center gap-3">
         {index === 0 ? (
-          <Link
-            href={ROUTES.careerResult}
-            className="text-sm font-medium text-slate-500 hover:text-slate-800"
-          >
+          <Button variant="ghost" onClick={cancel}>
             Cancel
-          </Link>
+          </Button>
         ) : (
           <Button variant="secondary" onClick={() => setIndex((i) => i - 1)}>
             Back
