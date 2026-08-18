@@ -83,9 +83,30 @@ body {
   }
 }
 
+/* Gentle up-and-down float for decorative hero artwork. */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+.animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-y 6s ease-in-out 1.5s infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-rise,
-  .animate-pop {
+  .animate-pop,
+  .animate-float,
+  .animate-float-delayed {
     animation: none;
   }
   .lift-hover,
