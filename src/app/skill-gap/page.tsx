@@ -1,30 +1,42 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import type { SkillGap } from "@/types";
 import { ROUTES } from "@/constants";
 import { ScoreRing } from "@/components/ui/ScoreRing";
 
-/** Demo skill-gap result screen (Step 3). Mock data, no animation, demo-ready. */
-const CAREER_NAME = "UI/UX Designer";
-const READINESS = 47;
-const SUBTEXT = "Measured across 7 skill areas against the level this role expects.";
+/** Skill-gap result screen (Step 3). Reads the stashed assessment result. */
 
-type Row = { name: string; current: number; target: number };
+interface StashedResult {
+  careerId: string;
+  careerName: string;
+  overall: number;
+  gaps: SkillGap[];
+}
 
-// Sorted biggest gap → smallest.
-const ROWS: Row[] = [
-  { name: "Wireframing", current: 3, target: 75 },
-  { name: "UX Design", current: 22, target: 80 },
-  { name: "Usability Testing", current: 25, target: 70 },
-  { name: "Prototyping", current: 35, target: 75 },
-  { name: "Visual / UI Design", current: 48, target: 80 },
-  { name: "Information Architecture", current: 50, target: 70 },
-  { name: "User Research", current: 65, target: 75 },
-];
-
-const CRITICAL: Row[] = ROWS.slice(0, 3);
+const BADGE: Record<SkillGap["severity"], { className: string; label: string }> = {
+  high: { className: "bg-red-600", label: "Critical" },
+  medium: { className: "bg-secondary", label: "Worth improving" },
+  low: { className: "bg-emerald-500", label: "On track" },
+};
 
 export default function SkillGapPage() {
+  const [result, setResult] = useState<StashedResult | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem("skillGapResult");
+      if (raw) setResult(JSON.parse(raw));
+    } catch {
+      setResult(null);
+    }
+    setLoading(false);
+  }, []);
+
+  const data = loading ? null : result;
+
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
       <header className="mb-8">
@@ -36,44 +48,108 @@ export default function SkillGapPage() {
         </h1>
       </header>
 
+      {data === null ? (
+        loading ? (
+          <p className="text-sm text-slate-500">Loading…</p>
+        ) : (
+          <AssessmentPrompt />
+        )
+      ) : (
+        <GapDashboard result={data} />
+      )}
+    </main>
+  );
+}
+
+/** Shown when /skill-gap is opened before an assessment has been completed. */
+function AssessmentPrompt() {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+      <p className="text-3xl">📋</p>
+      <h2 className="mt-3 text-lg font-bold text-slate-900">Assessment required</h2>
+      <p className="mx-auto mt-1 max-w-md text-sm text-slate-500">
+        You haven&apos;t completed a skill assessment yet. Pick a career to start
+        one — your skill gaps will show up here afterwards.
+      </p>
+      <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+        <Link
+          href={ROUTES.selectCareer}
+          className="rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-white transition duration-150 ease-out hover:bg-brand-dark"
+        >
+          Choose a career & start
+        </Link>
+        <Link
+          href={ROUTES.home}
+          className="rounded-lg border border-secondary bg-white px-5 py-2.5 text-sm font-medium text-secondary transition duration-150 ease-out hover:bg-secondary/10"
+        >
+          Back to home
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function GapDashboard({ result }: { result: StashedResult }) {
+  const { careerId, careerName, overall, gaps } = result;
+
+  // Backend sorts gaps biggest-first; sort defensively.
+  const sorted = [...gaps].sort((a, b) => b.gap - a.gap);
+  const biggest = sorted.filter((g) => g.gap > 0).slice(0, 3);
+
+  return (
+    <>
       <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
         {/* Left panel */}
         <div className="space-y-6">
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex items-center gap-5">
-              <ScoreRing value={READINESS} size={96} />
+              <ScoreRing value={overall} size={96} />
               <div>
                 <h2 className="text-lg font-bold leading-tight text-slate-900">
-                  {CAREER_NAME}
+                  {careerName}
                 </h2>
                 <p className="text-sm font-semibold text-brand">Readiness Score</p>
               </div>
             </div>
-            <p className="mt-4 text-sm leading-relaxed text-slate-600">{SUBTEXT}</p>
+            <p className="mt-4 text-sm leading-relaxed text-slate-600">
+              Measured across {gaps.length} skill areas against the level this role
+              expects.
+            </p>
           </section>
 
           <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
               Your Biggest Skill Gaps
             </p>
-            <ul className="mt-4 space-y-3">
-              {CRITICAL.map((g) => (
-                <li
-                  key={g.name}
-                  className="rounded-xl border border-red-200 bg-red-50/60 p-4"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="text-sm font-semibold text-slate-800">{g.name}</p>
-                    <span className="rounded-full bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-                      Critical
-                    </span>
-                  </div>
-                  <p className="mt-1 text-xs tabular-nums text-slate-600">
-                    Current {g.current}% → Target {g.target}%
-                  </p>
-                </li>
-              ))}
-            </ul>
+            {biggest.length > 0 ? (
+              <ul className="mt-4 space-y-3">
+                {biggest.map((g) => {
+                  const badge = BADGE[g.severity];
+                  return (
+                    <li
+                      key={g.skillId}
+                      className="rounded-xl border border-red-200 bg-red-50/60 p-4"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-sm font-semibold text-slate-800">{g.name}</p>
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white ${badge.className}`}
+                        >
+                          {badge.label}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-xs tabular-nums text-slate-600">
+                        Current {g.current}% → Target {g.target}%
+                      </p>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p className="mt-4 text-sm text-slate-500">
+                Nice — no skill gaps above target. You're on track.
+              </p>
+            )}
           </section>
         </div>
 
@@ -83,10 +159,10 @@ export default function SkillGapPage() {
             Core Competency Gap Analysis
           </p>
           <div className="mt-5 space-y-6">
-            {ROWS.map((r) => {
+            {sorted.map((r) => {
               const gap = r.target - r.current;
               return (
-                <div key={r.name}>
+                <div key={r.skillId}>
                   <div className="flex items-baseline justify-between gap-2">
                     <p className="text-sm font-medium text-slate-800">{r.name}</p>
                     <span className="text-xs font-bold uppercase tracking-wide text-red-600">
@@ -124,12 +200,12 @@ export default function SkillGapPage() {
           Get a project that closes these gaps
         </Link>
         <Link
-          href={ROUTES.assessment("uiux")}
+          href={ROUTES.assessment(careerId)}
           className="rounded-lg border border-secondary bg-white px-5 py-3 text-center text-sm font-bold uppercase tracking-wide text-secondary transition duration-150 ease-out hover:bg-secondary/10 active:scale-[0.98]"
         >
           Retake assessment
         </Link>
       </div>
-    </main>
+    </>
   );
 }
