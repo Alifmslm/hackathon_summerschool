@@ -543,10 +543,10 @@ export const PROJECT_TEMPLATES: ProjectTemplate[] = [
   {
     id: "uiux-intermediate-telemedicine-appointment-flow",
     careerId: "uiux",
-    difficulty: "intermediate",
     title: "Design a Telemedicine Appointment Booking Flow",
     description:
       "Design a flow that helps patients book a virtual doctor's appointment with minimal anxiety and confusion — an area where clarity and reassurance matter as much as usability.",
+    difficulty: "intermediate",
     skillsPracticed: ["UX Design", "Prototyping", "Wireframing"],
     coreRequirements: [
       { id: "c1", label: "Cover symptom/reason selection, doctor selection, and time slot booking" },

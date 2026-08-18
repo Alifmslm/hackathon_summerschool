@@ -130,7 +130,11 @@ function AssessmentPrompt() {
 function GapDashboard({ result }: { result: StashedResult }) {
   const { careerId, careerName, overall, gaps } = result;
 
-  // Core competency list always shows in career-skill order.
+  // Core competency list: biggest gap first, down to "no gap" (≤ target).
+  const rawGap = (s: SkillGap) => s.target - s.current;
+  const sorted = [...gaps].sort((a, b) => rawGap(b) - rawGap(a));
+
+  // "Biggest gaps" panel keeps the top gaps, biggest first.
   const biggest = [...gaps]
     .sort((a, b) => b.gap - a.gap)
     .filter((g) => g.gap > 0)
@@ -204,7 +208,7 @@ function GapDashboard({ result }: { result: StashedResult }) {
             Core Competency Gap Analysis
           </p>
           <div className="mt-5 space-y-6">
-            {gaps.map((r) => {
+            {sorted.map((r) => {
               const gap = r.target - r.current;
               const noGap = gap <= 0;
               return (
