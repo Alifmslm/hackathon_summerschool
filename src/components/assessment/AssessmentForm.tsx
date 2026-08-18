@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { AssessmentAnswers, AssessmentQuestion, Career } from "@/types";
 import { ROUTES } from "@/constants";
@@ -26,11 +26,23 @@ export function AssessmentForm({
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<AssessmentAnswers>({});
 
+  /**
+   * Browser-navigation guard: once the assessment is entered, browser
+   * back/forward cannot move between questions or leave the page. A pinned
+   * history entry is re-asserted on every popstate, so the only way to navigate
+   * is the in-page Back / Continue buttons.
+   */
+  useEffect(() => {
+    history.pushState({ assessmentBlocked: true }, "");
+    const onPopState = () => history.pushState({ assessmentBlocked: true }, "");
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
   const question = questions[index];
   const isLast = index === questions.length - 1;
   const chosen = answers[question.id];
   const hasAnswered = chosen != null;
-  const completed = Object.keys(answers).length;
 
   function choose(optionId: string) {
     setAnswers((prev) => ({ ...prev, [question.id]: optionId }));
@@ -73,7 +85,8 @@ export function AssessmentForm({
         <div className="mt-4">
           <SegmentedProgress
             steps={questions.length}
-            completed={completed}
+            currentIndex={index}
+            isCurrentAnswered={hasAnswered}
             label={`Question ${index + 1} of ${questions.length}`}
           />
         </div>
@@ -120,7 +133,7 @@ export function AssessmentForm({
             Cancel
           </Link>
         ) : (
-          <Button variant="ghost" onClick={() => setIndex((i) => i - 1)}>
+          <Button variant="secondary" onClick={() => setIndex((i) => i - 1)}>
             Back
           </Button>
         )}

@@ -22,7 +22,7 @@ export default function HomePage() {
       <div className="mt-10 flex flex-col gap-3 sm:flex-row">
         <Link
           href={ROUTES.questionnaire}
-          className="rounded-lg bg-brand px-6 py-3 font-medium text-white shadow-sm transition hover:bg-brand-dark"
+          className="rounded-lg bg-brand px-6 py-3 font-medium text-white shadow-sm transition"
         >
           Take the career quiz
         </Link>
