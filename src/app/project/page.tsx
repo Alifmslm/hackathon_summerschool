@@ -115,7 +115,7 @@ function ProjectBrief({ result }: { result: StashedResult }) {
 
       <article className="mt-8 rounded-2xl bg-brand-dark p-6 text-white shadow-sm sm:p-10">
         <div className="flex flex-wrap items-center gap-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
             CURATED_BRIEF / {careerId.toUpperCase()}
           </p>
           <span
@@ -128,7 +128,7 @@ function ProjectBrief({ result }: { result: StashedResult }) {
         <p className="mt-4 leading-relaxed text-slate-300">{project.description}</p>
 
         <section className="mt-10">
-          <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+          <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
             Skills you&apos;ll practice
           </h3>
           <div className="mt-3 grid gap-1 sm:grid-cols-2">
@@ -142,13 +142,13 @@ function ProjectBrief({ result }: { result: StashedResult }) {
 
         <div className="mt-10 grid gap-10 sm:grid-cols-2">
           <section>
-            <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
               Core requirements
             </h3>
             <ul className="mt-3 space-y-2.5">
               {project.coreRequirements.map((req) => (
                 <li key={req.id} className="flex items-start gap-2.5 text-sm text-slate-200">
-                  <span aria-hidden className="mt-0.5 text-slate-500">
+                  <span aria-hidden className="mt-0.5 text-white">
                     ☐
                   </span>
                   {req.label}
@@ -158,13 +158,13 @@ function ProjectBrief({ result }: { result: StashedResult }) {
           </section>
 
           <section>
-            <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
               Technical requirements
             </h3>
             <ul className="mt-3 space-y-2.5">
               {project.technicalRequirements.map((req) => (
                 <li key={req.id} className="flex items-start gap-2.5 text-sm text-slate-200">
-                  <span aria-hidden className="mt-0.5 text-slate-500">
+                  <span aria-hidden className="mt-0.5 text-white">
                     ☐
                   </span>
                   {req.label}
@@ -176,7 +176,7 @@ function ProjectBrief({ result }: { result: StashedResult }) {
 
         {project.suggestedTools && project.suggestedTools.length > 0 && (
           <section className="mt-10">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
               Suggested tools
             </h3>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -194,7 +194,7 @@ function ProjectBrief({ result }: { result: StashedResult }) {
 
         {project.referenceLinks && project.referenceLinks.length > 0 && (
           <section className="mt-8">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+            <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
               References & inspiration
             </h3>
             <ul className="mt-3 space-y-1.5">
