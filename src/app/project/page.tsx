@@ -90,6 +90,34 @@ function ProjectBrief({ result }: { result: StashedResult }) {
   const { careerId, careerName, gaps } = result;
   const career = CAREERS.find((c) => c.id === careerId);
   const project = isCareerId(careerId) ? recommendProject(careerId, gaps) : null;
+  const [exporting, setExporting] = useState(false);
+
+  async function exportPdf() {
+    if (!project || exporting) return;
+    setExporting(true);
+    try {
+      const res = await fetch("/api/project/pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ project }),
+      });
+      if (!res.ok) throw new Error("PDF export failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "project-guide.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error(err);
+      alert("Couldn't export the PDF. Please try again.");
+    } finally {
+      setExporting(false);
+    }
+  }
 
   if (!project) {
     return (
@@ -234,7 +262,9 @@ function ProjectBrief({ result }: { result: StashedResult }) {
           className="animate-rise mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
           style={{ animationDelay: "640ms" }}
         >
-          <Button className="uppercase">Export project guide (PDF)</Button>
+          <Button className="uppercase" onClick={exportPdf} disabled={exporting}>
+            {exporting ? "Preparing…" : "Export project guide (PDF)"}
+          </Button>
           <a
             href={ROUTES.skillGap}
             className="inline-flex items-center justify-center rounded-lg border border-secondary/70 px-5 py-2.5 text-sm font-medium uppercase text-secondary transition duration-150 ease-out hover:border-secondary hover:text-white active:scale-[0.98]"

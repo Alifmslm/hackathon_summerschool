@@ -191,6 +191,9 @@ export interface ProjectGuide {
   skillsPracticed: string[];
   coreRequirements: string[];
   technicalRequirements: string[];
+  difficulty?: ProjectDifficulty;
+  suggestedTools?: string[];
+  referenceLinks?: ProjectReference[];
 }
 
 /* ══════════════════════════ API CONTRACTS ═════════════════════════════════ */
