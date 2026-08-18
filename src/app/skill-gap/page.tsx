@@ -262,18 +262,18 @@ function GapDashboard({ result }: { result: StashedResult }) {
       </div>
 
       {/* Bottom actions */}
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Link
-          href={ROUTES.project}
-          className="rounded-lg bg-brand px-5 py-3 text-center text-sm font-bold uppercase tracking-wide text-white transition duration-150 ease-out hover:bg-brand-dark active:scale-[0.98]"
-        >
-          Get a project that closes these gaps
-        </Link>
+      <div className="mt-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <Link
           href={ROUTES.assessment(careerId)}
           className="rounded-lg border border-secondary bg-white px-5 py-3 text-center text-sm font-bold uppercase tracking-wide text-secondary transition duration-150 ease-out hover:bg-secondary/10 active:scale-[0.98]"
         >
           Retake assessment
+        </Link>
+        <Link
+          href={ROUTES.project}
+          className="rounded-lg bg-brand px-5 py-3 text-center text-sm font-bold uppercase tracking-wide text-white transition duration-150 ease-out hover:bg-brand-dark active:scale-[0.98]"
+        >
+          Get a project that closes these gaps
         </Link>
       </div>
     </>
