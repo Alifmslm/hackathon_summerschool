@@ -32,7 +32,7 @@ export function ScoreRing({
           cy={size / 2}
           r={r}
           fill="none"
-          stroke="#6366f1"
+          stroke="#0683F9"
           strokeWidth={stroke}
           strokeLinecap="round"
           strokeDasharray={c}

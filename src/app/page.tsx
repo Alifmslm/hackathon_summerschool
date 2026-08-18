@@ -8,7 +8,7 @@ import { ROUTES } from "@/constants";
 export default function HomePage() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col items-center px-6 py-20 text-center">
-      <span className="mb-4 rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-brand-dark">
+      <span className="mb-4 rounded-full bg-brand/10 px-3 py-1 text-sm font-medium text-brand-dark">
         IT Career Navigator
       </span>
       <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
@@ -19,20 +19,16 @@ export default function HomePage() {
         practical projects to help you grow toward the career you want.
       </p>
 
-      <div className="mt-6 text-sm text-slate-500">
-        Discover → Assess → Identify → Build
-      </div>
-
       <div className="mt-10 flex flex-col gap-3 sm:flex-row">
         <Link
           href={ROUTES.questionnaire}
-          className="rounded-lg bg-brand px-6 py-3 font-medium text-white shadow-sm transition hover:bg-brand-dark"
+          className="rounded-lg bg-brand px-6 py-3 font-medium text-white shadow-sm transition"
         >
           Take the career quiz
         </Link>
         <Link
           href={ROUTES.selectCareer}
-          className="rounded-lg border border-slate-300 bg-white px-6 py-3 font-medium text-slate-700 transition hover:border-slate-400"
+          className="rounded-lg border border-slate-300 bg-white px-6 py-3 font-medium text-secondary transition"
         >
           I already know my path
         </Link>

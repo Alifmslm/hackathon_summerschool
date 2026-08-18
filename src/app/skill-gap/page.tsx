@@ -125,7 +125,7 @@ export default function SkillGapPage() {
         </Link>
         <Link
           href={ROUTES.assessment("uiux")}
-          className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-center text-sm font-bold uppercase tracking-wide text-slate-700 transition duration-150 ease-out hover:border-slate-400 active:scale-[0.98]"
+          className="rounded-lg border border-secondary bg-white px-5 py-3 text-center text-sm font-bold uppercase tracking-wide text-secondary transition duration-150 ease-out hover:bg-secondary/10 active:scale-[0.98]"
         >
           Retake assessment
         </Link>
