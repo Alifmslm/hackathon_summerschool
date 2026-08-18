@@ -61,7 +61,7 @@ export default function ProjectPage() {
 /** Shown when /project is opened before an assessment has been completed. */
 function ProjectPrompt() {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+    <div className="animate-rise rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
       <p className="text-3xl">🛠️</p>
       <h1 className="mt-3 text-lg font-bold text-slate-900">No project brief yet</h1>
       <p className="mx-auto mt-1 max-w-md text-sm text-slate-500">
@@ -101,7 +101,7 @@ function ProjectBrief({ result }: { result: StashedResult }) {
 
   return (
     <>
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <header className="animate-rise flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
           Project brief for {career?.name ?? careerName}
         </h1>
@@ -109,11 +109,13 @@ function ProjectBrief({ result }: { result: StashedResult }) {
           <Button variant="secondary" className="uppercase">
             Curated brief
           </Button>
-          <Button className="uppercase">Generate with AI</Button>
         </div>
       </header>
 
-      <article className="mt-8 rounded-2xl bg-brand-dark p-6 text-white shadow-sm sm:p-10">
+      <article
+        className="animate-rise mt-8 rounded-2xl bg-brand-dark p-6 text-white shadow-sm sm:p-10"
+        style={{ animationDelay: "80ms" }}
+      >
         <div className="flex flex-wrap items-center gap-2">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
             CURATED_BRIEF / {careerId.toUpperCase()}
@@ -127,13 +129,17 @@ function ProjectBrief({ result }: { result: StashedResult }) {
         <h2 className="mt-3 text-3xl font-bold tracking-tight">{project.title}</h2>
         <p className="mt-4 leading-relaxed text-slate-300">{project.description}</p>
 
-        <section className="mt-10">
+        <section className="animate-rise mt-10" style={{ animationDelay: "160ms" }}>
           <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
             Skills you&apos;ll practice
           </h3>
           <div className="mt-3 grid gap-1 sm:grid-cols-2">
-            {project.skillsPracticed.map((skill) => (
-              <p key={skill} className="text-sm text-slate-200">
+            {project.skillsPracticed.map((skill, i) => (
+              <p
+                key={skill}
+                className="animate-rise text-sm text-slate-200"
+                style={{ animationDelay: `${200 + i * 45}ms` }}
+              >
                 – {skill}
               </p>
             ))}
@@ -141,13 +147,17 @@ function ProjectBrief({ result }: { result: StashedResult }) {
         </section>
 
         <div className="mt-10 grid gap-10 sm:grid-cols-2">
-          <section>
+          <section className="animate-rise" style={{ animationDelay: "280ms" }}>
             <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
               Core requirements
             </h3>
             <ul className="mt-3 space-y-2.5">
-              {project.coreRequirements.map((req) => (
-                <li key={req.id} className="flex items-start gap-2.5 text-sm text-slate-200">
+              {project.coreRequirements.map((req, i) => (
+                <li
+                  key={req.id}
+                  className="animate-rise flex items-start gap-2.5 text-sm text-slate-200"
+                  style={{ animationDelay: `${320 + i * 40}ms` }}
+                >
                   <span aria-hidden className="mt-0.5 text-white">
                     ☐
                   </span>
@@ -157,13 +167,17 @@ function ProjectBrief({ result }: { result: StashedResult }) {
             </ul>
           </section>
 
-          <section>
+          <section className="animate-rise" style={{ animationDelay: "360ms" }}>
             <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
               Technical requirements
             </h3>
             <ul className="mt-3 space-y-2.5">
-              {project.technicalRequirements.map((req) => (
-                <li key={req.id} className="flex items-start gap-2.5 text-sm text-slate-200">
+              {project.technicalRequirements.map((req, i) => (
+                <li
+                  key={req.id}
+                  className="animate-rise flex items-start gap-2.5 text-sm text-slate-200"
+                  style={{ animationDelay: `${400 + i * 40}ms` }}
+                >
                   <span aria-hidden className="mt-0.5 text-white">
                     ☐
                   </span>
@@ -175,15 +189,16 @@ function ProjectBrief({ result }: { result: StashedResult }) {
         </div>
 
         {project.suggestedTools && project.suggestedTools.length > 0 && (
-          <section className="mt-10">
+          <section className="animate-rise mt-10" style={{ animationDelay: "480ms" }}>
             <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
               Suggested tools
             </h3>
             <div className="mt-3 flex flex-wrap gap-2">
-              {project.suggestedTools.map((tool) => (
+              {project.suggestedTools.map((tool, i) => (
                 <span
                   key={tool}
-                  className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-200"
+                  className="animate-rise rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-200"
+                  style={{ animationDelay: `${520 + i * 35}ms` }}
                 >
                   {tool}
                 </span>
@@ -193,18 +208,19 @@ function ProjectBrief({ result }: { result: StashedResult }) {
         )}
 
         {project.referenceLinks && project.referenceLinks.length > 0 && (
-          <section className="mt-8">
+          <section className="animate-rise mt-8" style={{ animationDelay: "560ms" }}>
             <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">
               References & inspiration
             </h3>
             <ul className="mt-3 space-y-1.5">
-              {project.referenceLinks.map((ref) => (
+              {project.referenceLinks.map((ref, i) => (
                 <li key={ref.url}>
                   <a
                     href={ref.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-secondary underline-offset-2 hover:underline"
+                    className="animate-rise text-sm text-secondary underline-offset-2 hover:underline"
+                    style={{ animationDelay: `${600 + i * 35}ms` }}
                   >
                     {ref.title}
                   </a>
@@ -214,7 +230,10 @@ function ProjectBrief({ result }: { result: StashedResult }) {
           </section>
         )}
 
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div
+          className="animate-rise mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
+          style={{ animationDelay: "640ms" }}
+        >
           <Button className="uppercase">Export project guide (PDF)</Button>
           <a
             href={ROUTES.skillGap}
